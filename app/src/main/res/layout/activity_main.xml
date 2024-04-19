@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".MainActivity">
+
+    <!-- Top status bar -->
+    <RelativeLayout
+        android:id="@+id/statusBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Cash status -->
+        <TextView
+            android:id="@+id/cashStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:text="Cash: $0"
+            android:textColor="#FFFFFF" />
+
+    </RelativeLayout>
+
+    <!-- BlorBo image -->
+
+    <!-- Button image -->
+
+    <ImageView
+        android:id="@+id/blorboImage"
+        android:layout_width="196dp"
+        android:layout_height="342dp"
+        android:src="@drawable/blorbo_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.613"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Bottom status bar -->
+
+    <ImageView
+        android:id="@+id/buttonImage"
+        android:layout_width="193dp"
+        android:layout_height="143dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/button_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.683"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blorboImage" />
+
+    <RelativeLayout
+        android:id="@+id/bottomStatusBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Upgrade button -->
+        <Button
+            android:id="@+id/upgradeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:background="#9c491b"
+            android:text="UPGRADE"
+            android:textColor="#FFFFFF" />
+
+    </RelativeLayout>
+
+    <!-- Emotion image -->
+    <ImageView
+        android:id="@+id/emotionImage"
+        android:layout_width="231dp"
+        android:layout_height="341dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/emotion_default"
+        app:layout_constraintBottom_toTopOf="@+id/bottomStatusBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonImage"
+        app:layout_constraintVertical_bias="0.731" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
