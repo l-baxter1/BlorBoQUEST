@@ -19,21 +19,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/back_to_game"
-            android:gravity="start|center_vertical"/>
+            android:gravity="start|center_vertical"
+            android:onClick="onMainPageButtonClicked"/>
 
         <Button
             android:id="@+id/settings_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings"
-            android:gravity="start|center_vertical"/>
+            android:gravity="start|center_vertical"
+            android:onClick="onSettingsButtonClicked"/>
 
         <Button
             android:id="@+id/gallery_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/gallery"
-            android:gravity="start|center_vertical"/>
+            android:gravity="start|center_vertical"
+            android:onClick="onGalleryButtonClicked"/>
 
         <Button
             android:id="@+id/email_nav"
@@ -48,14 +51,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/background_information"
-            android:gravity="start|center_vertical"/>
+            android:gravity="start|center_vertical"
+            android:onClick="onBackgroundInfoButtonClicked"/>
 
         <Button
             android:id="@+id/credits_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/credits"
-            android:gravity="start|center_vertical"/>
+            android:gravity="start|center_vertical"
+            android:onClick="onCreditsButtonClicked"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

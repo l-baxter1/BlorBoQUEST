@@ -16,6 +16,21 @@
             android:name=".MenuPage"
             android:exported="true" />
         <activity
+            android:name=".Credits"
+            android:exported="true" />
+        <activity
+            android:name=".BackgroundInfo"
+            android:exported="true" />
+        <activity
+            android:name=".Settings"
+            android:exported="true" />
+        <activity
+            android:name=".Mail"
+            android:exported="true" />
+        <activity
+            android:name=".Gallery"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
