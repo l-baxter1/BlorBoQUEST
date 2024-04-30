@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         background = findViewById(R.id.main)
 
         background.background = getDrawable(R.drawable.placeholder_bg)
-        moneyButton.background = getDrawable(R.drawable.button_default)
+        //moneyButton.background = getDrawable(R.drawable.button_default)
 
         cashTextBox.text = totalCash.toString()
     }

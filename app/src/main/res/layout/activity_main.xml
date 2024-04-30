@@ -121,6 +121,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomStatusBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.123"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@null"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
