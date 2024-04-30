@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+        <Button
+            android:id="@+id/main_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/back_to_game"
+            android:gravity="start|center_vertical"/>
+
+        <Button
+            android:id="@+id/settings_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            android:gravity="start|center_vertical"/>
+
+        <Button
+            android:id="@+id/gallery_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gallery"
+            android:gravity="start|center_vertical"/>
+
+        <Button
+            android:id="@+id/email_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:onClick="onEmailButtonClicked"
+            android:text="@string/emailText" />
+
+        <Button
+            android:id="@+id/background_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/background_information"
+            android:gravity="start|center_vertical"/>
+
+        <Button
+            android:id="@+id/credits_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/credits"
+            android:gravity="start|center_vertical"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

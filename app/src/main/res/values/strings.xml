@@ -3,4 +3,13 @@
     <string name="upgrade">UPGRADE</string>
     <string name="click_here_for_money">click here for money</string>
     <string name="cash">Cash: $</string>
+    <string name="email">This is an email.</string>
+    <string name="menu">Menu ></string>
+    <string name="back_to_game">Back to game ></string>
+    <string name="settings">Settings ></string>
+    <string name="gallery">Gallery ></string>
+    <string name="emailText">Email (0) ></string>
+    <string name="background_information">Background Information ></string>
+    <string name="credits">Credits ></string>
+    <string name="emailNotificationNum">[0]</string>
 </resources>

@@ -17,11 +17,22 @@
 
     <!-- Bottom status bar -->
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/nav_menu"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <RelativeLayout
+
         android:id="@+id/statusBar"
         android:layout_width="411dp"
         android:layout_height="39dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -29,14 +40,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- Cash status -->
+
+
         <TextView
             android:id="@+id/cashStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
             android:text="@string/cash"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/cashNumber"
@@ -45,7 +57,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:layout_toEndOf="@+id/cashStatus"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/black" />
 
     </RelativeLayout>
 
@@ -64,7 +76,7 @@
         android:id="@+id/bottomStatusBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="0dp"
         android:background="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
