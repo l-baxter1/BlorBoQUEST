@@ -12,4 +12,14 @@
     <string name="background_information">Background Information ></string>
     <string name="credits">Credits ></string>
     <string name="emailNotificationNum">[0]</string>
+    <string-array name="background_array">
+        <item>Black</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Purple</item>
+        <item>Pink</item>
+        <item>White</item>
+        <item>Brown</item>
+    </string-array>
 </resources>
