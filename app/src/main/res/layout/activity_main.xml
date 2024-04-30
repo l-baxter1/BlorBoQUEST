@@ -32,12 +32,11 @@
         android:id="@+id/statusBar"
         android:layout_width="411dp"
         android:layout_height="39dp"
-        android:layout_marginTop="16dp"
         android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/nav_menu">
 
         <!-- Cash status -->
 
@@ -48,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/cash"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/cashNumber"
@@ -57,7 +56,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:layout_toEndOf="@+id/cashStatus"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
@@ -65,10 +64,10 @@
         android:id="@+id/blorboImage"
         android:layout_width="196dp"
         android:layout_height="342dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="128dp"
         android:src="@drawable/blorbo_default"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,7 +75,6 @@
         android:id="@+id/bottomStatusBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
         android:background="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,34 +86,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_margin="8dp"
-            android:background="#9c491b"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#293A27"
+            android:onClick="onUpgradeButtonClick"
             android:text="@string/upgrade"
-            android:textColor="#FFFFFF"
-            android:onClick="onUpgradeButtonClick" />
+            android:textColor="#FFFFFF" />
 
     </RelativeLayout>
 
     <!-- Emotion image -->
+
     <ImageView
         android:id="@+id/emotionImage"
         android:layout_width="166dp"
         android:layout_height="239dp"
+        android:layout_marginBottom="32dp"
         android:src="@drawable/emotion_default"
         android:translationZ="-10dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomStatusBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/moneyButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/click_here_for_money"
-        app:layout_constraintBottom_toTopOf="@+id/emotionImage"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="onMoneyButtonClick"
+        android:src="@drawable/money_button_selector"
+        app:layout_constraintBottom_toTopOf="@+id/bottomStatusBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:onClick="onMoneyButtonClick" />
+        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
