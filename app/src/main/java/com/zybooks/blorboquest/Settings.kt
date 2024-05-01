@@ -4,9 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+
 
 class Settings: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,16 +20,36 @@ class Settings: AppCompatActivity() {
         supportActionBar?.setIcon(R.drawable.menu_icon)
         setSupportActionBar(findViewById(R.id.nav_menu))
         val spinner: Spinner = findViewById(R.id.backgrounds_spinner)
-// Create an ArrayAdapter using the string array and a default spinner layout.
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.background_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears.
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner.
-            spinner.adapter = adapter
+        val defaultTextForBackgroundSpinner = "Background Color"
+        val backgroundColors: MutableList<String?> = ArrayList()
+        backgroundColors.add(0, "Select Background Color")
+        backgroundColors.add("Black")
+        backgroundColors.add("Yellow")
+        backgroundColors.add("Green")
+        backgroundColors.add("Blue")
+        backgroundColors.add("Purple")
+        backgroundColors.add("Pink")
+
+        val settings_layout = findViewById<ConstraintLayout>(R.id.settingsLayout)
+        val arrayAdapter: ArrayAdapter<String?> = ArrayAdapter<String?>(this, android.R.layout.simple_list_item_1, backgroundColors)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = arrayAdapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                if (parent.getItemAtPosition(position) == "Select Background Color") {
+                    settings_layout.setBackgroundResource(R.color.default_back_color)
+                }
+                if(parent.getItemAtPosition(position)== "Yellow"){
+                    settings_layout.setBackgroundResource(R.color.yellow_back_color)
+                }
+                else {
+                    val item = parent.getItemAtPosition(position).toString()
+
+                    Toast.makeText(parent.context, "Selected: $item", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
