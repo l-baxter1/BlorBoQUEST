@@ -96,33 +96,29 @@
 
         <!-- Upgrade button -->
 
-        <Button
+        <ImageButton
             android:id="@+id/upgradeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="8dp"
             android:layout_toStartOf="@+id/upgradeCostBox"
-            android:background="#293A27"
-            android:fontFamily="@font/press_start_2p"
+            android:background="@null"
             android:onClick="onUpgradeButtonClick"
-            android:text="Upgrade Button"
-            android:textColor="#FFFFFF"
-            android:textSize="8sp" />
+            android:src="@drawable/button_upgrade" />
 
-        <Button
+        <ImageButton
             android:id="@+id/downgradeButton"
-            android:layout_width="122dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="7dp"
             android:layout_toEndOf="@+id/downgradeCostBox"
-            android:fontFamily="@font/press_start_2p"
-            android:text="Downgrade BlorBo"
-            android:textSize="8sp" />
+            android:background="@null"
+            android:src="@drawable/blorbo_downgrade" />
 
         <TextView
             android:id="@+id/downgradeCostBox"
@@ -132,12 +128,12 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="35dp"
             android:fontFamily="@font/press_start_2p"
             android:lineSpacingExtra="8sp"
             android:text="$--"
             android:textAlignment="textStart"
-            android:textColor="#ffffff"
+            android:textColor="#ff0000"
             android:textSize="16sp" />
 
         <TextView
@@ -146,11 +142,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="35dp"
             android:layout_marginEnd="5dp"
             android:fontFamily="@font/press_start_2p"
             android:text="$--"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FF0000"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
