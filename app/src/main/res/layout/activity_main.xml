@@ -31,7 +31,7 @@
 
         android:id="@+id/statusBar"
         android:layout_width="411dp"
-        android:layout_height="39dp"
+        android:layout_height="75dp"
         android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -42,21 +42,35 @@
 
 
         <TextView
-            android:id="@+id/cashStatus"
+            android:id="@+id/cashBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/cash"
-            android:textColor="@color/white" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:fontFamily="@font/press_start_2p"
+            android:text="$--"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/cashNumber"
+            android:id="@+id/multiplierBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:layout_toEndOf="@+id/cashStatus"
-            android:textColor="@color/white" />
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="25dp"
+            android:fontFamily="@font/press_start_2p"
+            android:text="Multiplier: 1x"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:typeface="normal" />
 
     </RelativeLayout>
 
@@ -81,18 +95,61 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <!-- Upgrade button -->
+
         <Button
             android:id="@+id/upgradeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="8dp"
+            android:layout_toStartOf="@+id/upgradeCostBox"
             android:background="#293A27"
+            android:fontFamily="@font/press_start_2p"
             android:onClick="onUpgradeButtonClick"
-            android:text="@string/upgrade"
+            android:text="Upgrade Button"
+            android:textColor="#FFFFFF"
+            android:textSize="8sp" />
+
+        <Button
+            android:id="@+id/downgradeButton"
+            android:layout_width="122dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="7dp"
+            android:layout_toEndOf="@+id/downgradeCostBox"
+            android:fontFamily="@font/press_start_2p"
+            android:text="Downgrade BlorBo"
+            android:textSize="8sp" />
+
+        <TextView
+            android:id="@+id/downgradeCostBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/press_start_2p"
+            android:lineSpacingExtra="8sp"
+            android:text="$--"
+            android:textAlignment="textStart"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/upgradeCostBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/press_start_2p"
+            android:text="$--"
             android:textColor="#FFFFFF" />
 
     </RelativeLayout>

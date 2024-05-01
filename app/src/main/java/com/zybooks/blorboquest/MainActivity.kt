@@ -15,11 +15,21 @@ import androidx.constraintlayout.widget.ConstraintLayout
 class MainActivity : AppCompatActivity() {
 
     private lateinit var moneyButton: ImageButton
-    private lateinit var cashTextBox: TextView
+    private lateinit var cashBox: TextView
     private lateinit var background: ConstraintLayout
+    private lateinit var multiplierBox: TextView
+    private lateinit var downgradeButton: Button
+    private lateinit var upgradeButton: Button
+    private lateinit var downgradeCostBox: TextView
+    private lateinit var upgradeCostBox: TextView
+
     private var totalCash = 0
     private var cashPerClick = 1
     private var clickMultiplier = 1
+    private var blorboMultiplier = 1
+    private var downgradeCost = 1
+    private var upgradeCost = 1
+    private var abbr = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,19 +38,21 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setIcon(R.drawable.menu_icon)
         setSupportActionBar(findViewById(R.id.nav_menu))
         moneyButton = findViewById(R.id.moneyButton)
-        cashTextBox = findViewById(R.id.cashNumber)
+        cashBox = findViewById(R.id.cashBox)
         background = findViewById(R.id.main)
 
         background.background = getDrawable(R.drawable.placeholder_bg)
-        //moneyButton.background = getDrawable(R.drawable.button_default)
 
-        cashTextBox.text = totalCash.toString()
+        setMoneyBox(cashBox, totalCash, abbr)
+        setMoneyBox(upgradeCostBox, upgradeCost, abbr)
+        setMoneyBox(downgradeCostBox, downgradeCost, abbr)
+        setMultBox(cashBox, totalCash)
+
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.menu_button ->{
@@ -48,14 +60,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
-
     }
     fun onMoneyButtonClick(view: View) {
         totalCash += (cashPerClick * clickMultiplier)
-        cashTextBox.text = totalCash.toString()
+        setMoneyBox(cashBox, totalCash, abbr)
     }
-
     fun onUpgradeButtonClick(view: View) {
-        clickMultiplier *= 2
+        if (totalCash >= upgradeCost) {
+            totalCash -= upgradeCost
+            clickMultiplier *= 2
+            upgradeCost *= 4
+            setMultBox(multiplierBox, clickMultiplier)
+            setMoneyBox(upgradeCostBox, totalCash, abbr)
+        }
+    }
+    fun setMoneyBox(box: TextView, value: Int, abbr: String) {
+        box.text = "$" + value + abbr
+    }
+    fun setMultBox(box: TextView, value: Int) {
+        //box.text = (value + "x").toString()
     }
 }
