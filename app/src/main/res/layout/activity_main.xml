@@ -118,6 +118,7 @@
             android:layout_marginTop="7dp"
             android:layout_toEndOf="@+id/downgradeCostBox"
             android:background="@null"
+            android:onClick="onDowngradeButtonClick"
             android:src="@drawable/blorbo_downgrade" />
 
         <TextView
@@ -177,5 +178,18 @@
         app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@null"/>
+
+    <TextView
+        android:id="@+id/moneyStolenText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="325dp"
+        android:fontFamily="@font/press_start_2p"
+        android:text="MONEY STOLEN!"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
