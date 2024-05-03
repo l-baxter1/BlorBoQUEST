@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/menu_page">
 
     <LinearLayout
         android:layout_width="409dp"
@@ -20,7 +21,8 @@
             android:layout_height="wrap_content"
             android:text="@string/back_to_game"
             android:gravity="start|center_vertical"
-            android:onClick="onMainPageButtonClicked"/>
+            android:onClick="onMainPageButtonClicked"
+            android:fontFamily="@font/press_start_2p"/>
 
         <Button
             android:id="@+id/settings_nav"
@@ -28,7 +30,8 @@
             android:layout_height="wrap_content"
             android:text="@string/settings"
             android:gravity="start|center_vertical"
-            android:onClick="onSettingsButtonClicked"/>
+            android:onClick="onSettingsButtonClicked"
+            android:fontFamily="@font/press_start_2p"/>
 
         <Button
             android:id="@+id/gallery_nav"
@@ -36,7 +39,8 @@
             android:layout_height="wrap_content"
             android:text="@string/gallery"
             android:gravity="start|center_vertical"
-            android:onClick="onGalleryButtonClicked"/>
+            android:onClick="onGalleryButtonClicked"
+            android:fontFamily="@font/press_start_2p"/>
 
         <Button
             android:id="@+id/email_nav"
@@ -44,7 +48,8 @@
             android:layout_height="wrap_content"
             android:gravity="start|center_vertical"
             android:onClick="onEmailButtonClicked"
-            android:text="@string/emailText" />
+            android:text="@string/emailText"
+            android:fontFamily="@font/press_start_2p"/>
 
         <Button
             android:id="@+id/background_nav"
@@ -52,7 +57,8 @@
             android:layout_height="wrap_content"
             android:text="@string/background_information"
             android:gravity="start|center_vertical"
-            android:onClick="onBackgroundInfoButtonClicked"/>
+            android:onClick="onBackgroundInfoButtonClicked"
+            android:fontFamily="@font/press_start_2p"/>
 
         <Button
             android:id="@+id/credits_nav"
@@ -60,7 +66,8 @@
             android:layout_height="wrap_content"
             android:text="@string/credits"
             android:gravity="start|center_vertical"
-            android:onClick="onCreditsButtonClicked"/>
+            android:onClick="onCreditsButtonClicked"
+            android:fontFamily="@font/press_start_2p"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
