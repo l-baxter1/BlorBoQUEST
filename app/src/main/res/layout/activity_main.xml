@@ -75,16 +75,15 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/blorboImage"
+    <pl.droidsonroids.gif.GifImageView
         android:layout_width="196dp"
         android:layout_height="342dp"
-        android:layout_marginTop="128dp"
-        android:src="@drawable/blorbo_default"
+        android:layout_marginStart="32dp"
+        android:src="@drawable/blorbomovegif"
+        app:layout_constraintBottom_toTopOf="@+id/emotionImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.46"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.322"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <RelativeLayout
         android:id="@+id/bottomStatusBar"
