@@ -8,12 +8,12 @@ blorbo.
 suddenly, your dream life is turned into a nightmare. blorbo, the quadrillionaire ceo of blorbocorp and, for all
 intents and purposes, the ruler of the universe, has decided--for no reason in particular--to fuck you over.
 he takes everything--family, house, money, job--and theres nothing you can do about it. whos gonna stop the
-king of the universe? not you, thats for sure. youre left completely alone and hopeless, roaming the streets,
+king of the universe? not you, that's for sure. You are left completely alone and hopeless, roaming the streets,
 trying only to find your next meal. life sucks.
 
 until...
 
-you see a familiar shadow walking into the alleyway youve settled in for the night.
+you see a familiar shadow walking into the alleyway you've settled in for the night.
 
 its him.
 
@@ -22,3 +22,17 @@ time for revenge.
 down with blorbo.
 
 goal: get to $1,000,000 without blorbo stealing all of your money
+
+
+Mark off when completed with an 'X' in the square brackets
+ToDo: switch money stealage to percentage instead of a flat amount[]
+ToDo: make upgrades and downgrades their own xml pages[]
+ToDo: make sure game state is persevered when switching pages[]
+ToDo: do email page[]
+ToDo: upgrades should be based on percentage not flat amounts as well[]
+ToDo: add start menu []
+ToDo: add info to background info page[]
+ToDo: add credits[]
+ToDo: add goal meter[]
+ToDo: add cutscenes[]
+ToDo: add pictures to gallery[]
