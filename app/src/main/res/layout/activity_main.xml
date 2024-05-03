@@ -185,7 +185,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="325dp"
         android:fontFamily="@font/press_start_2p"
-        android:text="MONEY STOLEN!"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

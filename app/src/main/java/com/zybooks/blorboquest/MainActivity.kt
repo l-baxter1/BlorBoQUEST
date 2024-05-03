@@ -2,6 +2,7 @@ package com.zybooks.blorboquest
 
 import android.content.Intent
 import android.graphics.Color
+import android.icu.text.CompactDecimalFormat
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import kotlinx.coroutines.delay
+import java.util.Locale
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     private var totalCash = 0.0
     private var cashPerClick = 1.0
     private var clickMultiplier = 1.0
-    private var blorboMultiplier = 1000000.0
+    private var blorboMultiplier = 1.0
     private var downgradeCost = 1.0
     private var upgradeCost = 1.0
     private var abbr = ""
@@ -58,17 +60,22 @@ class MainActivity : AppCompatActivity() {
         background.background = getDrawable(R.drawable.placeholder_bg)
         flashText.visibility = View.GONE
 
-        setMoneyBox(cashBox, totalCash, abbr)
-        setMoneyBox(upgradeCostBox, upgradeCost, abbr)
-        setMoneyBox(downgradeCostBox, downgradeCost, abbr)
+        setMoneyBox(cashBox, totalCash)
+        setMoneyBox(upgradeCostBox, upgradeCost)
+        setMoneyBox(downgradeCostBox, downgradeCost)
         setMultBox(multiplierBox, clickMultiplier)
 
         mainHandler.post(object: Runnable {
             override fun run() {
+                var chance = maybeBlorboGetsMorePowerful()
+                System.out.println(blorboMultiplier)
                 //doesn't steal if the player has no money
-                if (totalCash > 0.0) {
+                if (totalCash > 0.0 && chance <= 0.1) {
                     blorboStealsYourMoneyLoser()
-                    makeTextFlash()
+                    makeTextFlash("BlorBo regained power while stealing your money!")
+                } else if (totalCash > 0.0 && chance > 0.1) {
+                    blorboStealsYourMoneyLoser()
+                    makeTextFlash("MONEY STOLEN!")
                 }
                 //checks for money every 5s
                 mainHandler.postDelayed(this, 5000) //5 sec
@@ -88,11 +95,11 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
     fun blorboStealsYourMoneyLoser() {
-        totalCash -= blorboMultiplier
+        totalCash -= (blorboMultiplier * totalCash)
         if(totalCash < 0) {
             totalCash = 0.0
         }
-        setMoneyBox(cashBox, totalCash, abbr)
+        setMoneyBox(cashBox, totalCash)
 
         //update text colors
         if (totalCash >= upgradeCost) {
@@ -106,7 +113,8 @@ class MainActivity : AppCompatActivity() {
             downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
         }
     }
-    fun makeTextFlash() {
+    fun makeTextFlash(text: String) {
+        flashText.setText(text)
         flashText.visibility = View.VISIBLE
         Handler().postDelayed({
             flashText.setTextColor(Color.parseColor("#ff0000"))
@@ -118,13 +126,22 @@ class MainActivity : AppCompatActivity() {
             }, 500)
         }, 500)
     }
+    fun maybeBlorboGetsMorePowerful(): Double {
+        var chance = ((0..100).random()) / 100.0
+        System.out.println("Chance: " + chance)
+        if (chance <= 0.1) {
+            blorboMultiplier = 1.0
+            System.out.println("Strength regained!")
+        }
+        return chance
+    }
     fun onMoneyButtonClick(view: View) {
         totalCash += (cashPerClick * clickMultiplier)
 
         //truncates numbers to two decimal points
         totalCash = Math.round(totalCash * 10.0) / 10.0
 
-        setMoneyBox(cashBox, totalCash, abbr)
+        setMoneyBox(cashBox, totalCash)
 
         //update text colors
         if (totalCash >= upgradeCost) {
@@ -146,15 +163,15 @@ class MainActivity : AppCompatActivity() {
             } else {
                 clickMultiplier += upgradeCost / 25
             }
-            upgradeCost *= 4
+            upgradeCost *= 1.5
 
             //truncates numbers to two decimal points
             clickMultiplier = Math.round(clickMultiplier * 10.0) / 10.0
             totalCash = Math.round(totalCash * 10.0) / 10.0
 
             setMultBox(multiplierBox, clickMultiplier)
-            setMoneyBox(upgradeCostBox, upgradeCost, abbr)
-            setMoneyBox(cashBox, totalCash, abbr)
+            setMoneyBox(upgradeCostBox, upgradeCost)
+            setMoneyBox(cashBox, totalCash)
 
             //update text colors
             if (totalCash < upgradeCost) {
@@ -168,15 +185,15 @@ class MainActivity : AppCompatActivity() {
     fun onDowngradeButtonClick(view: View) {
         if (totalCash >= downgradeCost) {
             totalCash -= downgradeCost
-            blorboMultiplier /= 5
-            downgradeCost *= 4
+            blorboMultiplier /= 1.25
+            downgradeCost *= 1.5
 
             //truncates numbers to two decimal points
             blorboMultiplier = Math.round(blorboMultiplier * 10.0) / 10.0
             totalCash = Math.round(totalCash * 10.0) / 10.0
 
-            setMoneyBox(downgradeCostBox, downgradeCost, abbr)
-            setMoneyBox(cashBox, totalCash, abbr)
+            setMoneyBox(downgradeCostBox, downgradeCost)
+            setMoneyBox(cashBox, totalCash)
 
             //update text colors
             if (totalCash < upgradeCost) {
@@ -187,16 +204,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    fun setMoneyBox(box: TextView, value: Double, abbr: String) {
+    fun setMoneyBox(box: TextView, value: Double) {
         //truncates numbers to two decimal points
+        var valueNew = CompactDecimalFormat.getInstance(Locale.getDefault(), CompactDecimalFormat.CompactStyle.SHORT).format(value)
         Math.round(value * 10.0) / 10.0
-
-        box.text = "$" + value + abbr
+        box.text = "$" + valueNew
     }
     fun setMultBox(box: TextView, value: Double) {
-        box.text = "Multiplier: x" + value
-    }
-    fun findAbbr() {
-
+        var valueNew = CompactDecimalFormat.getInstance(Locale.getDefault(), CompactDecimalFormat.CompactStyle.SHORT).format(value)
+        box.text = "Multiplier: x" + valueNew
     }
 }
