@@ -1,19 +1,21 @@
 package com.zybooks.blorboquest
 
-import android.R
 import android.content.Intent
 import android.graphics.Color
-import android.media.MediaPlayer
+import android.icu.text.CompactDecimalFormat
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
+import kotlinx.coroutines.delay
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,8 +30,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var upgradeCostBox: TextView
     private lateinit var mainHandler: Handler
     private lateinit var flashText: TextView
-
-    private var mediaPlayer: MediaPlayer? = null
 
     private var totalCash = 0.0
     private var cashPerClick = 1.0
@@ -64,10 +64,6 @@ class MainActivity : AppCompatActivity() {
         setMoneyBox(downgradeCostBox, downgradeCost, abbr)
         setMultBox(multiplierBox, clickMultiplier)
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.backgroundmusic)
-        mediaPlayer?.isLooping = true
-        mediaPlayer?.start()
-
         mainHandler.post(object: Runnable {
             override fun run() {
                 //doesn't steal if the player has no money
@@ -80,13 +76,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mediaPlayer?.release()
-        mediaPlayer = null
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
         return super.onCreateOptionsMenu(menu)
