@@ -9,6 +9,14 @@
     android:translationZ="-10dp"
     tools:context=".MainActivity">
 
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/nav_menu"
+        app:layout_constraintBottom_toTopOf="@id/bottomStatusBar"/>
+
+
     <!-- Top status bar -->
 
     <!-- BlorBo image -->
@@ -76,6 +84,7 @@
     </RelativeLayout>
 
     <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/blorboMove"
         android:layout_width="196dp"
         android:layout_height="342dp"
         android:layout_marginStart="32dp"

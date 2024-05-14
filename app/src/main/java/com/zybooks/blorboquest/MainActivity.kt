@@ -12,11 +12,14 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import kotlinx.coroutines.delay
-import java.util.Locale
+import com.zybooks.blorboquest.UpgradeOptionsFragment
+import androidx.fragment.app.Fragment
+import android.view.KeyEvent
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,10 +38,18 @@ class MainActivity : AppCompatActivity() {
     private var totalCash = 0.0
     private var cashPerClick = 1.0
     private var clickMultiplier = 1.0
-    private var blorboMultiplier = 1.0
+    private var blorboMultiplier = 1000000.0
     private var downgradeCost = 1.0
     private var upgradeCost = 1.0
     private var abbr = ""
+
+    private var upgradeFragmentVisible = false
+
+    private val upgradeOptions = listOf(
+        UpgradeOption("Money Laundering Upgrade", 400, "Upgrades money multiplier by x30"),
+        UpgradeOption("Weapon Upgrade", 5000, "Unlocks an ending but that's coded later"),
+        UpgradeOption("Autoclicker Upgrade", 20, "Adds 1 automatic click per upgrade")
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,27 +71,108 @@ class MainActivity : AppCompatActivity() {
         background.background = getDrawable(R.drawable.placeholder_bg)
         flashText.visibility = View.GONE
 
-        setMoneyBox(cashBox, totalCash)
-        setMoneyBox(upgradeCostBox, upgradeCost)
-        setMoneyBox(downgradeCostBox, downgradeCost)
+        setMoneyBox(cashBox, totalCash, abbr)
+        setMoneyBox(upgradeCostBox, upgradeCost, abbr)
+        setMoneyBox(downgradeCostBox, downgradeCost, abbr)
         setMultBox(multiplierBox, clickMultiplier)
+
+        upgradeButton.setOnClickListener {
+            showUpgradeOptions()
+        }
 
         mainHandler.post(object: Runnable {
             override fun run() {
-                var chance = maybeBlorboGetsMorePowerful()
-                System.out.println(blorboMultiplier)
                 //doesn't steal if the player has no money
-                if (totalCash > 0.0 && chance <= 0.1) {
+                if (totalCash > 0.0) {
                     blorboStealsYourMoneyLoser()
-                    makeTextFlash("BlorBo regained power while stealing your money!")
-                } else if (totalCash > 0.0 && chance > 0.1) {
-                    blorboStealsYourMoneyLoser()
-                    makeTextFlash("MONEY STOLEN!")
+                    makeTextFlash()
                 }
                 //checks for money every 5s
                 mainHandler.postDelayed(this, 5000) //5 sec
             }
         })
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        // R.id.fragmentContainer = View.GONE
+
+        if (keyCode == KeyEvent.KEYCODE_Q) {
+            if (upgradeFragmentVisible) {
+                showAllViews()
+                upgradeFragmentVisible = false
+            } else {
+                showAllViews()
+            }
+
+            return true // Indicate that the event has been handled
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+
+    override fun onBackPressed() {
+        if (upgradeFragmentVisible) {
+            showAllViews()
+            upgradeFragmentVisible = false
+        } else {
+            super.onBackPressed()
+            showAllViews()
+        }
+    }
+
+    private fun showAllViews() {
+                // Make the fragment container and all other views visible
+                val rootLayout = findViewById<ViewGroup>(R.id.main)
+                for (i in 0 until rootLayout.childCount) {
+                    val child = rootLayout.getChildAt(i)
+                    child.visibility = View.VISIBLE
+                }
+               supportFragmentManager.popBackStack()
+               supportFragmentManager.isDestroyed
+    }
+    private fun showUpgradeOptions() {
+        if (!upgradeFragmentVisible) {
+            val fragment = UpgradeOptionsFragment()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit()
+            upgradeFragmentVisible = true
+            hideViewsIfUpgradeButtonClicked()
+        } else {
+            // Hide the upgrade fragment
+           // supportFragmentManager.popBackStack()
+            // supportFragmentManager.isDestroyed
+            upgradeFragmentVisible = false
+           // showAllViews()
+        }
+    }
+
+    private fun hideViewsIfUpgradeButtonClicked() {
+        val rootLayout = findViewById<ViewGroup>(R.id.main)
+
+        // Iterate through all child views and set visibility to GONE
+        for (i in 0 until rootLayout.childCount) {
+            val child = rootLayout.getChildAt(i)
+            if (child.id != R.id.fragmentContainer && child.id != R.id.upgradeButton) {
+                child.visibility = View.GONE
+            }
+        }
+    }
+
+    fun handleUpgradeOption(option: UpgradeOption) {
+
+    }
+    private fun applyUpgradeEffect(option: UpgradeOption) {
+        when (option.name) {
+            "Money Laundering Upgrade" -> applyMoneyLaunderingUpgrade(option)
+            "Weapon Upgrade" -> unlockWeaponUpgrade(option)
+            "Autoclicker Upgrade" -> upgradeAutoclicker(option)
+            // Add more cases for other upgrade options if needed
+            else -> {
+                // Handle unrecognized upgrade options
+            }
+        }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
@@ -95,11 +187,11 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
     fun blorboStealsYourMoneyLoser() {
-        totalCash -= (blorboMultiplier * totalCash)
+        totalCash -= blorboMultiplier
         if(totalCash < 0) {
             totalCash = 0.0
         }
-        setMoneyBox(cashBox, totalCash)
+        setMoneyBox(cashBox, totalCash, abbr)
 
         //update text colors
         if (totalCash >= upgradeCost) {
@@ -113,8 +205,8 @@ class MainActivity : AppCompatActivity() {
             downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
         }
     }
-    fun makeTextFlash(text: String) {
-        flashText.setText(text)
+
+    fun makeTextFlash() {
         flashText.visibility = View.VISIBLE
         Handler().postDelayed({
             flashText.setTextColor(Color.parseColor("#ff0000"))
@@ -126,22 +218,13 @@ class MainActivity : AppCompatActivity() {
             }, 500)
         }, 500)
     }
-    fun maybeBlorboGetsMorePowerful(): Double {
-        var chance = ((0..100).random()) / 100.0
-        System.out.println("Chance: " + chance)
-        if (chance <= 0.1) {
-            blorboMultiplier = 1.0
-            System.out.println("Strength regained!")
-        }
-        return chance
-    }
     fun onMoneyButtonClick(view: View) {
         totalCash += (cashPerClick * clickMultiplier)
 
         //truncates numbers to two decimal points
         totalCash = Math.round(totalCash * 10.0) / 10.0
 
-        setMoneyBox(cashBox, totalCash)
+        setMoneyBox(cashBox, totalCash, abbr)
 
         //update text colors
         if (totalCash >= upgradeCost) {
@@ -155,45 +238,19 @@ class MainActivity : AppCompatActivity() {
             downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
         }
     }
-    fun onUpgradeButtonClick(view: View) {
-        if (totalCash >= upgradeCost) {
-            totalCash -= upgradeCost
-            if (clickMultiplier <= 10) {
-                clickMultiplier *= 2
-            } else {
-                clickMultiplier += upgradeCost / 25
-            }
-            upgradeCost *= 1.5
 
-            //truncates numbers to two decimal points
-            clickMultiplier = Math.round(clickMultiplier * 10.0) / 10.0
-            totalCash = Math.round(totalCash * 10.0) / 10.0
-
-            setMultBox(multiplierBox, clickMultiplier)
-            setMoneyBox(upgradeCostBox, upgradeCost)
-            setMoneyBox(cashBox, totalCash)
-
-            //update text colors
-            if (totalCash < upgradeCost) {
-                upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
-            }
-            if (totalCash < downgradeCost) {
-                downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
-            }
-        }
-    }
     fun onDowngradeButtonClick(view: View) {
         if (totalCash >= downgradeCost) {
             totalCash -= downgradeCost
-            blorboMultiplier /= 1.25
-            downgradeCost *= 1.5
+            blorboMultiplier /= 5
+            downgradeCost *= 4
 
             //truncates numbers to two decimal points
             blorboMultiplier = Math.round(blorboMultiplier * 10.0) / 10.0
             totalCash = Math.round(totalCash * 10.0) / 10.0
 
-            setMoneyBox(downgradeCostBox, downgradeCost)
-            setMoneyBox(cashBox, totalCash)
+            setMoneyBox(downgradeCostBox, downgradeCost, abbr)
+            setMoneyBox(cashBox, totalCash, abbr)
 
             //update text colors
             if (totalCash < upgradeCost) {
@@ -204,14 +261,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    fun setMoneyBox(box: TextView, value: Double) {
+    fun setMoneyBox(box: TextView, value: Double, abbr: String) {
         //truncates numbers to two decimal points
-        var valueNew = CompactDecimalFormat.getInstance(Locale.getDefault(), CompactDecimalFormat.CompactStyle.SHORT).format(value)
         Math.round(value * 10.0) / 10.0
-        box.text = "$" + valueNew
+
+        box.text = "$" + value + abbr
     }
     fun setMultBox(box: TextView, value: Double) {
-        var valueNew = CompactDecimalFormat.getInstance(Locale.getDefault(), CompactDecimalFormat.CompactStyle.SHORT).format(value)
-        box.text = "Multiplier: x" + valueNew
+        box.text = "Multiplier: x" + value
     }
+    fun findAbbr() {
+
+    }
+
 }
