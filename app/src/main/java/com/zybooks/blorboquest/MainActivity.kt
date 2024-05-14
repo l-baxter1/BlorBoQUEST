@@ -161,14 +161,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun handleUpgradeOption(option: UpgradeOption) {
-        // Apply the effect based on the selected option
-        // For example, update the click multiplier or unlock certain features
-        // You can implement this based on your game logic
+
     }
     private fun applyUpgradeEffect(option: UpgradeOption) {
-        // Apply the effect based on the selected option
-        // For example, update the click multiplier or unlock certain features
-        // You can implement this based on your game logic
+        when (option.name) {
+            "Money Laundering Upgrade" -> applyMoneyLaunderingUpgrade(option)
+            "Weapon Upgrade" -> unlockWeaponUpgrade(option)
+            "Autoclicker Upgrade" -> upgradeAutoclicker(option)
+            // Add more cases for other upgrade options if needed
+            else -> {
+                // Handle unrecognized upgrade options
+            }
+        }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
