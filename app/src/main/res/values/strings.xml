@@ -14,18 +14,30 @@
     <string name="emailNotificationNum">[0]</string>
     <string name="background_color_settings">Background color:</string>
     <string name="sfx_toggle_label">Sfx</string>
-<string-array name="Emails">
-    <item id="0">Email 1</item>
-    <item id="1">Email 2</item>
-    <item id="2">Email 3</item>
-    <item id="3">Email 4</item>
-    <item id="4">Email 5</item>
-    <item id="5">Email 6</item>
-    <item id="6">Email 7</item>
-    <item id="7">Email 8</item>
-    <item id="8">Email 9</item>
-    <item id="9">Email 10</item>
+<string-array name="emailTextArray">
+    <item id="0">Email 1 :3</item>
+    <item id="1">Email 2 ;3</item>
+    <item id="2">Email 3 :o</item>
+    <item id="3">Email 4 :]</item>
+    <item id="4">Email 5 :#</item>
+    <item id="5">Email 6 >:3</item>
+    <item id="6">Email 7 :j</item>
+    <item id="7">Email 8 ;3</item>
+    <item id="8">Email 9 :D</item>
+    <item id="9">Email 10 :O</item>
 </string-array>
+    <string-array name="emailLabelArray">
+        <item id="0">Email 1</item>
+        <item id="1">Email 2</item>
+        <item id="2">Email 3</item>
+        <item id="3">Email 4</item>
+        <item id="4">Email 5</item>
+        <item id="5">Email 6</item>
+        <item id="6">Email 7</item>
+        <item id="7">Email 8</item>
+        <item id="8">Email 9</item>
+        <item id="9">Email 10</item>
+    </string-array>
 
 
 </resources>

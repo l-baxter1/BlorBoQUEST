@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction
 
 
 class Mail: AppCompatActivity() {
-    private var textId = 0
+    private var textId = 9
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mail)
@@ -21,6 +21,7 @@ class Mail: AppCompatActivity() {
 
         supportActionBar?.setIcon(R.drawable.menu_icon)
         setSupportActionBar(findViewById(R.id.nav_menu))
+        addEmail(1)
 
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -36,30 +37,20 @@ class Mail: AppCompatActivity() {
         return super.onOptionsItemSelected(item)
 
     }
-    fun addEmail(view:View) {
+    fun addEmail(ID:Int) {
         val parentLayout = findViewById<LinearLayout>(R.id.email_layout)
-        val textView = TextView(parentLayout.context)
-        textId++
-        textView.text = "Email $textId"
-
-        // Set layout parameters
-        val layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        // Add margin to the new TextView (optional)
+        val textViewsArray = arrayOfNulls<TextView>(10)
+        val stringArray = resources.getStringArray(R.array.emailLabelArray)
+        for (i in textViewsArray.indices) {
+            textViewsArray[i] = TextView(this)
+            textViewsArray[i]?.text = stringArray[i]
+            // You can customize other properties of the TextView here
+        }
 
 
-        textView.layoutParams = layoutParams
 
-        // Add the TextView to the layout
-        parentLayout.addView(textView)
-        textView.setOnClickListener{
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_view, Email())
-                .addToBackStack(null)
-                .commit()
+        for (i in textViewsArray.indices) {
+            parentLayout.addView(textViewsArray[i])
         }
 
     }
