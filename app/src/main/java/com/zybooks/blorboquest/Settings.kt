@@ -87,8 +87,6 @@ class Settings: AppCompatActivity() {
 
     }
     fun onQuitButtonClicked(view: View) {
-
-        // on below line we are exiting our activity
-        exitProcess(0)
+        finishAffinity()
     }
 }

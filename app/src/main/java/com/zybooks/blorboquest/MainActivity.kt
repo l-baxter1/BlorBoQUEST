@@ -1,6 +1,9 @@
 package com.zybooks.blorboquest
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.icu.text.CompactDecimalFormat
 import android.os.Bundle
@@ -43,7 +46,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         supportActionBar?.setIcon(R.drawable.menu_icon)
         setSupportActionBar(findViewById(R.id.nav_menu))
         moneyButton = findViewById(R.id.moneyButton)
@@ -66,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         setMultBox(multiplierBox, clickMultiplier)
 
         mainHandler.post(object: Runnable {
+
             override fun run() {
                 var chance = maybeBlorboGetsMorePowerful()
                 System.out.println(blorboMultiplier)

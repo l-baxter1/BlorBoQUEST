@@ -14,7 +14,18 @@
     <string name="emailNotificationNum">[0]</string>
     <string name="background_color_settings">Background color:</string>
     <string name="sfx_toggle_label">Sfx</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+<string-array name="Emails">
+    <item id="0">Email 1</item>
+    <item id="1">Email 2</item>
+    <item id="2">Email 3</item>
+    <item id="3">Email 4</item>
+    <item id="4">Email 5</item>
+    <item id="5">Email 6</item>
+    <item id="6">Email 7</item>
+    <item id="7">Email 8</item>
+    <item id="8">Email 9</item>
+    <item id="9">Email 10</item>
+</string-array>
+
 
 </resources>
