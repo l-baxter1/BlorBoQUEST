@@ -220,8 +220,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun buyAutoclicker(option: UpgradeOption) {
-        if (totalCash >= option.cost) {
-            totalCash -= option.cost
+        var cost = option.cost
+
+        if (totalCash >= cost) {
+            totalCash -= cost
+            cost *= cost
             startAutoclicker()
             autoclickersCount++
             // Increment the total cash by 1 for each autoclicker
