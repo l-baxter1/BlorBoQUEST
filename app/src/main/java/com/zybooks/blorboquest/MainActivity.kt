@@ -12,10 +12,14 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import kotlinx.coroutines.delay
+import com.zybooks.blorboquest.UpgradeOptionsFragment
+import androidx.fragment.app.Fragment
+import android.view.KeyEvent
 import java.util.Locale
 
 
@@ -32,6 +36,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainHandler: Handler
     private lateinit var flashText: TextView
 
+    private var autoclickersCount = 0
+    private lateinit var autoclickerHandler: Handler
+
+
     private var totalCash = 0.0
     private var cashPerClick = 1.0
     private var clickMultiplier = 1.0
@@ -39,6 +47,14 @@ class MainActivity : AppCompatActivity() {
     private var downgradeCost = 1.0
     private var upgradeCost = 1.0
     private var abbr = ""
+
+    private var upgradeFragmentVisible = false
+
+    private val upgradeOptions = listOf(
+        UpgradeOption("Money Laundering Upgrade", 400, "Upgrades money multiplier by x30"),
+        UpgradeOption("Weapon Upgrade", 5000, "Unlocks an ending but that's coded later"),
+        UpgradeOption("Autoclicker Upgrade", 20, "Adds 1 automatic click per upgrade")
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +81,12 @@ class MainActivity : AppCompatActivity() {
         setMoneyBox(downgradeCostBox, downgradeCost)
         setMultBox(multiplierBox, clickMultiplier)
 
+        upgradeButton.setOnClickListener {
+            showUpgradeOptions()
+        }
+
+        autoclickerHandler = Handler(Looper.getMainLooper())
+
         mainHandler.post(object: Runnable {
             override fun run() {
                 var chance = maybeBlorboGetsMorePowerful()
@@ -82,6 +104,148 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        // R.id.fragmentContainer = View.GONE
+
+        if (keyCode == KeyEvent.KEYCODE_Q) {
+            if (upgradeFragmentVisible) {
+                showAllViews()
+                upgradeFragmentVisible = false
+            } else {
+                showAllViews()
+            }
+
+            return true // Indicate that the event has been handled
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+
+    override fun onBackPressed() {
+        if (upgradeFragmentVisible) {
+            showAllViews()
+            upgradeFragmentVisible = false
+        } else {
+            super.onBackPressed()
+            showAllViews()
+        }
+    }
+
+    private fun showAllViews() {
+                // Make the fragment container and all other views visible
+                val rootLayout = findViewById<ViewGroup>(R.id.main)
+                for (i in 0 until rootLayout.childCount) {
+                    val child = rootLayout.getChildAt(i)
+                    child.visibility = View.VISIBLE
+                }
+               supportFragmentManager.popBackStack()
+               supportFragmentManager.isDestroyed
+    }
+    private fun showUpgradeOptions() {
+        if (!upgradeFragmentVisible) {
+            val fragment = UpgradeOptionsFragment()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit()
+            upgradeFragmentVisible = true
+            hideViewsIfUpgradeButtonClicked()
+        } else {
+            // Hide the upgrade fragment
+           // supportFragmentManager.popBackStack()
+            // supportFragmentManager.isDestroyed
+            upgradeFragmentVisible = false
+           // showAllViews()
+        }
+    }
+
+    private fun hideViewsIfUpgradeButtonClicked() {
+        val rootLayout = findViewById<ViewGroup>(R.id.main)
+
+        // Iterate through all child views and set visibility to GONE
+        for (i in 0 until rootLayout.childCount) {
+            val child = rootLayout.getChildAt(i)
+            if (child.id != R.id.fragmentContainer && child.id != R.id.upgradeButton) {
+                child.visibility = View.GONE
+            }
+        }
+    }
+
+    // Call startAutoclicker() when the autoclicker is purchased
+    private fun startAutoclicker() {
+        autoclickerHandler.postDelayed(object : Runnable {
+            override fun run() {
+                // Increment total cash by 1 and update the UI
+                totalCash += 1
+                setMoneyBox(cashBox, totalCash, abbr)
+
+                // Repeat the autoclicker every second
+                autoclickerHandler.postDelayed(this, 1000)
+            }
+        }, 1000)
+    }
+
+    // Call stopAutoclicker() when the autoclicker is disabled or removed
+    private fun stopAutoclicker() {
+        autoclickerHandler.removeCallbacksAndMessages(null)
+    }
+
+    fun handleUpgradeOption(option: UpgradeOption) {
+        applyUpgradeEffect(option)
+    }
+    private fun applyUpgradeEffect(option: UpgradeOption) {
+        when (option.name) {
+            "Money Laundering Upgrade" -> applyMoneyLaunderingUpgrade(option)
+            //"Weapon Upgrade" -> unlockWeaponUpgrade(option)
+            "Autoclicker Upgrade" -> buyAutoclicker(option)
+            // Add more cases for other upgrade options if needed
+            else -> {
+                // Handle unrecognized upgrade options
+            }
+        }
+    }
+    private fun buyAutoclicker(option: UpgradeOption) {
+        if (totalCash >= option.cost) {
+            totalCash -= option.cost
+            startAutoclicker()
+            autoclickersCount++
+            // Increment the total cash by 1 for each autoclicker
+            mainHandler.postDelayed({
+                totalCash += autoclickersCount
+                setMoneyBox(cashBox, totalCash, abbr)
+            }, 1000) // Adjust the delay (in milliseconds) as needed
+        } else {
+            // Handle case where player doesn't have enough cash to buy the upgrade
+            // You might show a message to the player indicating insufficient funds
+        }
+    }
+    private fun applyMoneyLaunderingUpgrade(option: UpgradeOption) {
+        if (totalCash >= 600.0) {
+            // Deduct $600 from the total cash
+            totalCash -= 600.0
+            // Apply the money laundering multiplier
+            clickMultiplier *= 10.0
+            // Update UI to reflect the new multiplier and total cash
+            setMultBox(multiplierBox, clickMultiplier)
+            setMoneyBox(cashBox, totalCash, abbr)
+            // Update text colors
+            if (totalCash >= upgradeCost) {
+                upgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
+            } else {
+                upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
+            }
+            if (totalCash >= downgradeCost) {
+                downgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
+            } else {
+                downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
+            }
+        } else {
+            // Handle case where player doesn't have enough cash to buy the upgrade
+            // You might show a message to the player indicating insufficient funds
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
         return super.onCreateOptionsMenu(menu)
