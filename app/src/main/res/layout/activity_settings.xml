@@ -22,9 +22,7 @@
         android:layout_height="523dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nav_menu"
-
-        >
+        app:layout_constraintTop_toBottomOf="@+id/nav_menu">
 
         <Spinner
             android:id="@+id/backgrounds_spinner"
@@ -33,6 +31,7 @@
             android:background="@drawable/divider"
             android:fontFamily="@font/press_start_2p"
             android:layout_marginBottom="5dp"
+            android:backgroundTint="#009688"
             />
         <Spinner
             android:id="@+id/button_spinner"
@@ -40,59 +39,37 @@
             android:layout_height="34dp"
             android:background="@drawable/divider"
             android:fontFamily="@font/press_start_2p"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="#009688"
+            />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/divider"
             android:fontFamily="@font/press_start_2p"
-            android:text="Switch"
-            android:layout_marginBottom="5dp"
-            android:padding="10dp"/>
+            android:text="Switch" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/divider"
             android:fontFamily="@font/press_start_2p"
-            android:text="Switch"
-            android:layout_marginBottom="5dp"
-            android:padding="10dp"
-            />
+            android:text="Switch" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/press_start_2p"
-            android:background="@drawable/divider"
-            android:text="Switch"
-            android:layout_marginBottom="5dp"
-            android:padding="10dp"/>
+            android:text="Switch" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/press_start_2p"
-            android:background="@drawable/divider"
-            android:text="Switch"
-            android:layout_marginBottom="5dp"
-            android:padding="10dp"/>
-
-        <Button
-            android:id="@+id/quitButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Quit"
-            android:drawableStart="@drawable/quit_icon"
-            android:textSize="24sp"
-            android:layout_marginBottom="5dp"
-            android:onClick="onQuitButtonClicked"/>
+            android:text="Switch" />
 
     </LinearLayout>
 
