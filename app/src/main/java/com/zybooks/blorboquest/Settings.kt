@@ -7,17 +7,20 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import kotlin.system.exitProcess
 
 
 class Settings: AppCompatActivity() {
+    private lateinit var quitButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-
+        quitButton = findViewById(R.id.quitButton)
         supportActionBar?.setIcon(R.drawable.menu_icon)
         setSupportActionBar(findViewById(R.id.nav_menu))
         val spinner: Spinner = findViewById(R.id.backgrounds_spinner)
@@ -43,7 +46,7 @@ class Settings: AppCompatActivity() {
                     settings_layout.setBackgroundResource(R.color.default_back_color)
                 }
                 if(parent.getItemAtPosition(position)== "Yellow"){
-                   // settings_layout.setBackgroundResource(R.color.yellow_back_color)
+                   settings_layout.setBackgroundResource(R.color.yellow_back_color)
                 }
                 if(parent.getItemAtPosition(position)== "Brown"){
                     settings_layout.setBackgroundResource(R.color.brown_back_color)
@@ -79,7 +82,13 @@ class Settings: AppCompatActivity() {
                 startActivity(Intent(this, MenuPage::class.java))
             }
         }
+
         return super.onOptionsItemSelected(item)
 
+    }
+    fun onQuitButtonClicked(view: View) {
+
+        // on below line we are exiting our activity
+        exitProcess(0)
     }
 }
