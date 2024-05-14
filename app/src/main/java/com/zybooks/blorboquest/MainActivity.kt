@@ -12,10 +12,14 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import kotlinx.coroutines.delay
+import com.zybooks.blorboquest.UpgradeOptionsFragment
+import androidx.fragment.app.Fragment
+import android.view.KeyEvent
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,6 +42,14 @@ class MainActivity : AppCompatActivity() {
     private var downgradeCost = 1.0
     private var upgradeCost = 1.0
     private var abbr = ""
+
+    private var upgradeFragmentVisible = false
+
+    private val upgradeOptions = listOf(
+        UpgradeOption("Money Laundering Upgrade", 400, "Upgrades money multiplier by x30"),
+        UpgradeOption("Weapon Upgrade", 5000, "Unlocks an ending but that's coded later"),
+        UpgradeOption("Autoclicker Upgrade", 20, "Adds 1 automatic click per upgrade")
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +76,10 @@ class MainActivity : AppCompatActivity() {
         setMoneyBox(downgradeCostBox, downgradeCost, abbr)
         setMultBox(multiplierBox, clickMultiplier)
 
+        upgradeButton.setOnClickListener {
+            showUpgradeOptions()
+        }
+
         mainHandler.post(object: Runnable {
             override fun run() {
                 //doesn't steal if the player has no money
@@ -75,6 +91,84 @@ class MainActivity : AppCompatActivity() {
                 mainHandler.postDelayed(this, 5000) //5 sec
             }
         })
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        // R.id.fragmentContainer = View.GONE
+
+        if (keyCode == KeyEvent.KEYCODE_Q) {
+            if (upgradeFragmentVisible) {
+                showAllViews()
+                upgradeFragmentVisible = false
+            } else {
+                showAllViews()
+            }
+
+            return true // Indicate that the event has been handled
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+
+    override fun onBackPressed() {
+        if (upgradeFragmentVisible) {
+            showAllViews()
+            upgradeFragmentVisible = false
+        } else {
+            super.onBackPressed()
+            showAllViews()
+        }
+    }
+
+    private fun showAllViews() {
+                // Make the fragment container and all other views visible
+                val rootLayout = findViewById<ViewGroup>(R.id.main)
+                for (i in 0 until rootLayout.childCount) {
+                    val child = rootLayout.getChildAt(i)
+                    child.visibility = View.VISIBLE
+                }
+               supportFragmentManager.popBackStack()
+               supportFragmentManager.isDestroyed
+    }
+    private fun showUpgradeOptions() {
+        if (!upgradeFragmentVisible) {
+            val fragment = UpgradeOptionsFragment()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit()
+            upgradeFragmentVisible = true
+            hideViewsIfUpgradeButtonClicked()
+        } else {
+            // Hide the upgrade fragment
+           // supportFragmentManager.popBackStack()
+            // supportFragmentManager.isDestroyed
+            upgradeFragmentVisible = false
+           // showAllViews()
+        }
+    }
+
+    private fun hideViewsIfUpgradeButtonClicked() {
+        val rootLayout = findViewById<ViewGroup>(R.id.main)
+
+        // Iterate through all child views and set visibility to GONE
+        for (i in 0 until rootLayout.childCount) {
+            val child = rootLayout.getChildAt(i)
+            if (child.id != R.id.fragmentContainer && child.id != R.id.upgradeButton) {
+                child.visibility = View.GONE
+            }
+        }
+    }
+
+    fun handleUpgradeOption(option: UpgradeOption) {
+        // Apply the effect based on the selected option
+        // For example, update the click multiplier or unlock certain features
+        // You can implement this based on your game logic
+    }
+    private fun applyUpgradeEffect(option: UpgradeOption) {
+        // Apply the effect based on the selected option
+        // For example, update the click multiplier or unlock certain features
+        // You can implement this based on your game logic
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
@@ -107,6 +201,7 @@ class MainActivity : AppCompatActivity() {
             downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
         }
     }
+
     fun makeTextFlash() {
         flashText.visibility = View.VISIBLE
         Handler().postDelayed({
@@ -139,33 +234,7 @@ class MainActivity : AppCompatActivity() {
             downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
         }
     }
-    fun onUpgradeButtonClick(view: View) {
-        if (totalCash >= upgradeCost) {
-            totalCash -= upgradeCost
-            if (clickMultiplier <= 10) {
-                clickMultiplier *= 2
-            } else {
-                clickMultiplier += upgradeCost / 25
-            }
-            upgradeCost *= 4
 
-            //truncates numbers to two decimal points
-            clickMultiplier = Math.round(clickMultiplier * 10.0) / 10.0
-            totalCash = Math.round(totalCash * 10.0) / 10.0
-
-            setMultBox(multiplierBox, clickMultiplier)
-            setMoneyBox(upgradeCostBox, upgradeCost, abbr)
-            setMoneyBox(cashBox, totalCash, abbr)
-
-            //update text colors
-            if (totalCash < upgradeCost) {
-                upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
-            }
-            if (totalCash < downgradeCost) {
-                downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
-            }
-        }
-    }
     fun onDowngradeButtonClick(view: View) {
         if (totalCash >= downgradeCost) {
             totalCash -= downgradeCost
@@ -200,4 +269,5 @@ class MainActivity : AppCompatActivity() {
     fun findAbbr() {
 
     }
+
 }
