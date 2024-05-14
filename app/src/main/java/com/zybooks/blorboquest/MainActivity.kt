@@ -22,6 +22,7 @@ import kotlinx.coroutines.delay
 import com.zybooks.blorboquest.UpgradeOptionsFragment
 import androidx.fragment.app.Fragment
 import android.view.KeyEvent
+import java.util.Locale
 
 
 class MainActivity : AppCompatActivity() {
@@ -184,10 +185,10 @@ class MainActivity : AppCompatActivity() {
     }
     private fun applyUpgradeEffect(option: UpgradeOption) {
         when (option.name) {
-            "Money Laundering Upgrade" -> applyMoneyLaunderingUpgrade(option)
-            "Weapon Upgrade" -> unlockWeaponUpgrade(option)
-            "Autoclicker Upgrade" -> upgradeAutoclicker(option)
-            // Add more cases for other upgrade options if needed
+//            "Money Laundering Upgrade" -> applyMoneyLaunderingUpgrade(option)
+//            "Weapon Upgrade" -> unlockWeaponUpgrade(option)
+//            "Autoclicker Upgrade" -> upgradeAutoclicker(option)
+//            // Add more cases for other upgrade options if needed
             else -> {
                 // Handle unrecognized upgrade options
             }

@@ -20,7 +20,7 @@ class Settings: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        quitButton = findViewById(R.id.quitButton)
+        //quitButton = findViewById(R.id.quitButton)
         supportActionBar?.setIcon(R.drawable.menu_icon)
         setSupportActionBar(findViewById(R.id.nav_menu))
         val spinner: Spinner = findViewById(R.id.backgrounds_spinner)
