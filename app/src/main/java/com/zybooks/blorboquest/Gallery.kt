@@ -15,7 +15,7 @@ class Gallery: AppCompatActivity() {
     private lateinit var galleryImage:ImageView
     var galIndex = 0
     val galleryImages = arrayOf(
-        R.drawable.gallery1 ,
+        R.drawable.gallery1,
         R.drawable.gallery2,
         R.drawable.gallery3,
         R.drawable.gallery4,
@@ -24,6 +24,8 @@ class Gallery: AppCompatActivity() {
         R.drawable.gallery7,
         R.drawable.gallery8,
         R.drawable.gallery9,
+        R.drawable.gallery10,
+        R.drawable.gallery11
     )
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -53,7 +55,7 @@ class Gallery: AppCompatActivity() {
     }
     fun onRightClicked(view: View) {
         galIndex++
-        if (galIndex > 8){
+        if (galIndex > galleryImages.size-1){
             galIndex = 0
         }
         galleryImage.setImageResource(galleryImages[galIndex])
@@ -62,7 +64,7 @@ class Gallery: AppCompatActivity() {
     fun onLeftClicked(view: View) {
         galIndex--
         if(galIndex == 0){
-            galIndex = 8
+            galIndex = galleryImages.size-1
         }
         galleryImage.setImageResource(galleryImages[galIndex])
     }
