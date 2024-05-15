@@ -44,7 +44,7 @@ class UpgradeOptionsFragment : Fragment() {
             val selectedOption = upgradeOptions[position]
             viewModel.selectUpgradeOption(selectedOption)
             // Notify the activity about the selected upgrade option
-            (requireActivity() as MainActivity).handleUpgradeOption(selectedOption)
+            //(requireActivity() as MainActivity).handleUpgradeOption(selectedOption)
         }
     }
     fun showAllViews() {

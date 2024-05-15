@@ -1,5 +1,6 @@
 package com.zybooks.blorboquest
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -7,17 +8,25 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import kotlin.system.exitProcess
 
 
 class Settings: AppCompatActivity() {
+    private lateinit var quitButton: Button
+    private lateinit var resetButton: Button
+
+    private var MainActivity = MainActivity()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-
+        //quitButton = findViewById(R.id.quitButton)
+        resetButton = findViewById(R.id.reset_button)
         supportActionBar?.setIcon(R.drawable.menu_icon)
         setSupportActionBar(findViewById(R.id.nav_menu))
         val spinner: Spinner = findViewById(R.id.backgrounds_spinner)
@@ -43,7 +52,7 @@ class Settings: AppCompatActivity() {
                     settings_layout.setBackgroundResource(R.color.default_back_color)
                 }
                 if(parent.getItemAtPosition(position)== "Yellow"){
-                   // settings_layout.setBackgroundResource(R.color.yellow_back_color)
+                   settings_layout.setBackgroundResource(R.color.yellow_back_color)
                 }
                 if(parent.getItemAtPosition(position)== "Brown"){
                     settings_layout.setBackgroundResource(R.color.brown_back_color)
@@ -79,7 +88,35 @@ class Settings: AppCompatActivity() {
                 startActivity(Intent(this, MenuPage::class.java))
             }
         }
+
         return super.onOptionsItemSelected(item)
 
+    }
+    fun onQuitButtonClicked(view:View) {
+        finishAffinity()
+    }
+    fun onResetButtonClicked(view: View) {
+        val saveDataFile = getSharedPreferences("saveFile", Context.MODE_PRIVATE)
+        val saveDataEditor = saveDataFile.edit()
+
+        MainActivity.totalCash = 0.0
+        MainActivity.cashPerClick = 1.0
+        MainActivity.clickMultiplier = 1.0
+        MainActivity.blorboMultiplier = 1.0
+        MainActivity.downgradeCost = 1.0
+        MainActivity.upgradeCost = 1.0
+
+        saveDataEditor.putString("total_cash", MainActivity.totalCash.toString())
+        saveDataEditor.putString("cash_per_click", MainActivity.cashPerClick.toString())
+        saveDataEditor.putString("click_multiplier", MainActivity.clickMultiplier.toString())
+        saveDataEditor.putString("blorbo_multiplier", MainActivity.blorboMultiplier.toString())
+        saveDataEditor.putString("downgrade_cost", MainActivity.downgradeCost.toString())
+        saveDataEditor.putString("upgrade_cost", MainActivity.upgradeCost.toString())
+
+        saveDataEditor.commit()
+
+        startActivity(Intent(this, com.zybooks.blorboquest.MainActivity::class.java))
+
+        Toast.makeText(this, "Progress reset.", Toast.LENGTH_SHORT).show()
     }
 }

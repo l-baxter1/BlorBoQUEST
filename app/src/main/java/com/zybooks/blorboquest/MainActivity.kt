@@ -1,6 +1,8 @@
 package com.zybooks.blorboquest
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.icu.text.CompactDecimalFormat
 import android.media.Image
@@ -21,8 +23,9 @@ import kotlinx.coroutines.delay
 import com.zybooks.blorboquest.UpgradeOptionsFragment
 import androidx.fragment.app.Fragment
 import android.view.KeyEvent
+import android.widget.Toast
+import java.util.Locale
 import android.widget.ImageView
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,14 +49,12 @@ class MainActivity : AppCompatActivity() {
     private var autoclickersCount = 0
     private lateinit var autoclickerHandler: Handler
 
-
-    private var totalCash = 0.0
-    private var cashPerClick = 1.0
-    private var clickMultiplier = 1.0
-    private var blorboMultiplier = 1000000.0
-    private var downgradeCost = 1.0
-    private var upgradeCost = 1.0
-    private var abbr = ""
+    var totalCash = 0.0
+    var cashPerClick = 1.0
+    var clickMultiplier = 1.0
+    var blorboMultiplier = 1.0
+    var downgradeCost = 1.0
+    var upgradeCost = 1.0
 
     private lateinit var killButton: Button
     private var killUnlocked = false
@@ -72,8 +73,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setValuesFromFile()
+
         supportActionBar?.setIcon(R.drawable.menu_icon)
         setSupportActionBar(findViewById(R.id.nav_menu))
+
         moneyButton = findViewById(R.id.moneyButton)
         cashBox = findViewById(R.id.cashBox)
         background = findViewById(R.id.main)
@@ -96,10 +100,9 @@ class MainActivity : AppCompatActivity() {
         background.background = getDrawable(R.drawable.placeholder_bg)
         flashText.visibility = View.GONE
 
-
-        setMoneyBox(cashBox, totalCash, abbr)
-        setMoneyBox(upgradeCostBox, upgradeCost, abbr)
-        setMoneyBox(downgradeCostBox, downgradeCost, abbr)
+        setMoneyBox(cashBox, totalCash)
+        setMoneyBox(upgradeCostBox, upgradeCost)
+        setMoneyBox(downgradeCostBox, downgradeCost)
         setMultBox(multiplierBox, clickMultiplier)
 
         upgradeButton.setOnClickListener {
@@ -144,11 +147,20 @@ class MainActivity : AppCompatActivity() {
 
         mainHandler.post(object: Runnable {
             override fun run() {
+                var chance = maybeBlorboGetsMorePowerful()
+                System.out.println(blorboMultiplier)
                 //doesn't steal if the player has no money
-                if (totalCash > 0.0) {
+                if (totalCash > 0.0 && chance <= 0.1) {
                     blorboStealsYourMoneyLoser()
-                    makeTextFlash()
+                    makeTextFlash("BlorBo regained power while stealing your money!")
+                } else if (totalCash > 0.0 && chance > 0.1) {
+                    blorboStealsYourMoneyLoser()
+                    makeTextFlash("MONEY STOLEN!")
                 }
+//                //saves data to file
+//                saveToSaveFile()
+//                //sets values from save file
+//                setValuesFromFile()
                 //checks for money every 5s
                 mainHandler.postDelayed(this, 5000) //5 sec
             }
@@ -243,7 +255,7 @@ class MainActivity : AppCompatActivity() {
             override fun run() {
                 // Increment total cash by 1 and update the UI
                 totalCash += 1
-                setMoneyBox(cashBox, totalCash, abbr)
+                setMoneyBox(cashBox, totalCash)
 
                 // Repeat the autoclicker every second
                 autoclickerHandler.postDelayed(this, 1000)
@@ -293,7 +305,7 @@ class MainActivity : AppCompatActivity() {
             // Increment the total cash by 1 for each autoclicker
             mainHandler.postDelayed({
                 totalCash += autoclickersCount
-                setMoneyBox(cashBox, totalCash, abbr)
+                setMoneyBox(cashBox, totalCash)
             }, 1000) // Adjust the delay (in milliseconds) as needed
         } else {
             // Handle case where player doesn't have enough cash to buy the upgrade
@@ -308,7 +320,7 @@ class MainActivity : AppCompatActivity() {
             clickMultiplier *= 10.0
             // Update UI to reflect the new multiplier and total cash
             setMultBox(multiplierBox, clickMultiplier)
-            setMoneyBox(cashBox, totalCash, abbr)
+            setMoneyBox(cashBox, totalCash)
             // Update text colors
             if (totalCash >= upgradeCost) {
                 upgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
@@ -348,11 +360,11 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
     fun blorboStealsYourMoneyLoser() {
-        totalCash -= blorboMultiplier
+        totalCash -= (blorboMultiplier * totalCash)
         if(totalCash < 0) {
             totalCash = 0.0
         }
-        setMoneyBox(cashBox, totalCash, abbr)
+        setMoneyBox(cashBox, totalCash)
 
         //update text colors
         if (totalCash >= upgradeCost) {
@@ -365,9 +377,12 @@ class MainActivity : AppCompatActivity() {
         } else {
             downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
         }
-    }
 
-    fun makeTextFlash() {
+        saveToSaveFile()
+        setValuesFromFile()
+    }
+    fun makeTextFlash(text: String) {
+        flashText.setText(text)
         flashText.visibility = View.VISIBLE
         Handler().postDelayed({
             flashText.setTextColor(Color.parseColor("#ff0000"))
@@ -379,13 +394,22 @@ class MainActivity : AppCompatActivity() {
             }, 500)
         }, 500)
     }
+    fun maybeBlorboGetsMorePowerful(): Double {
+        var chance = ((0..100).random()) / 100.0
+        System.out.println("Chance: " + chance)
+        if (chance <= 0.1) {
+            blorboMultiplier = 1.0
+            System.out.println("Strength regained!")
+        }
+        return chance
+    }
     fun onMoneyButtonClick(view: View) {
         totalCash += (cashPerClick * clickMultiplier)
 
         //truncates numbers to two decimal points
         totalCash = Math.round(totalCash * 10.0) / 10.0
 
-        setMoneyBox(cashBox, totalCash, abbr)
+        setMoneyBox(cashBox, totalCash)
 
         //update text colors
         if (totalCash >= upgradeCost) {
@@ -398,20 +422,27 @@ class MainActivity : AppCompatActivity() {
         } else {
             downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
         }
-    }
 
-    fun onDowngradeButtonClick(view: View) {
-        if (totalCash >= downgradeCost) {
-            totalCash -= downgradeCost
-            blorboMultiplier /= 5
-            downgradeCost *= 4
+        saveToSaveFile()
+        setValuesFromFile()
+    }
+    fun onUpgradeButtonClick(view: View) {
+        if (totalCash >= upgradeCost) {
+            totalCash -= upgradeCost
+            if (clickMultiplier <= 10) {
+                clickMultiplier *= 2
+            } else {
+                clickMultiplier += upgradeCost / 25
+            }
+            upgradeCost *= 1.5
 
             //truncates numbers to two decimal points
-            blorboMultiplier = Math.round(blorboMultiplier * 10.0) / 10.0
+            clickMultiplier = Math.round(clickMultiplier * 10.0) / 10.0
             totalCash = Math.round(totalCash * 10.0) / 10.0
 
-            setMoneyBox(downgradeCostBox, downgradeCost, abbr)
-            setMoneyBox(cashBox, totalCash, abbr)
+            setMultBox(multiplierBox, clickMultiplier)
+            setMoneyBox(upgradeCostBox, upgradeCost)
+            setMoneyBox(cashBox, totalCash)
 
             //update text colors
             if (totalCash < upgradeCost) {
@@ -421,18 +452,65 @@ class MainActivity : AppCompatActivity() {
                 downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
             }
         }
-    }
-    fun setMoneyBox(box: TextView, value: Double, abbr: String) {
-        //truncates numbers to two decimal points
-        Math.round(value * 10.0) / 10.0
 
-        box.text = "$" + value + abbr
+        saveToSaveFile()
+        setValuesFromFile()
+    }
+    fun onDowngradeButtonClick(view: View) {
+        if (totalCash >= downgradeCost) {
+            totalCash -= downgradeCost
+            blorboMultiplier /= 1.25
+            downgradeCost *= 1.5
+
+            //truncates numbers to two decimal points
+            blorboMultiplier = Math.round(blorboMultiplier * 10.0) / 10.0
+            totalCash = Math.round(totalCash * 10.0) / 10.0
+
+            setMoneyBox(downgradeCostBox, downgradeCost)
+            setMoneyBox(cashBox, totalCash)
+
+            //update text colors
+            if (totalCash < upgradeCost) {
+                upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
+            }
+            if (totalCash < downgradeCost) {
+                downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
+            }
+        }
+
+        saveToSaveFile()
+        setValuesFromFile()
+    }
+    fun setMoneyBox(box: TextView, value: Double) {
+        //truncates numbers to two decimal points
+        var valueNew = CompactDecimalFormat.getInstance(Locale.getDefault(), CompactDecimalFormat.CompactStyle.SHORT).format(value)
+        Math.round(value * 10.0) / 10.0
+        box.text = "$" + valueNew
     }
     fun setMultBox(box: TextView, value: Double) {
-        box.text = "Multiplier: x" + value
+        var valueNew = CompactDecimalFormat.getInstance(Locale.getDefault(), CompactDecimalFormat.CompactStyle.SHORT).format(value)
+        box.text = "Multiplier: x" + valueNew
     }
-    fun findAbbr() {
+    fun saveToSaveFile() {
+        val saveDataFile = getSharedPreferences("saveFile", Context.MODE_PRIVATE)
+        var saveDataEditor = saveDataFile.edit()
 
+        saveDataEditor.putString("total_cash", totalCash.toString())
+        saveDataEditor.putString("cash_per_click", cashPerClick.toString())
+        saveDataEditor.putString("click_multiplier", clickMultiplier.toString())
+        saveDataEditor.putString("blorbo_multiplier", blorboMultiplier.toString())
+        saveDataEditor.putString("downgrade_cost", downgradeCost.toString())
+        saveDataEditor.putString("upgrade_cost", upgradeCost.toString())
+
+        saveDataEditor.apply()
     }
-
+    fun setValuesFromFile() {
+//        var saveFile = getSharedPreferences("saveFile", MODE_PRIVATE)
+//        totalCash = (saveFile.getString("total_cash", null)?.toDouble() ?: Double) as Double
+//        cashPerClick = (saveFile.getString("cash_per_click", null)?.toDouble() ?: Double) as Double
+//        clickMultiplier = (saveFile.getString("click_multiplier", null)?.toDouble() ?: Double) as Double
+//        blorboMultiplier = (saveFile.getString("blorbo_multiplier", null)?.toDouble() ?: Double) as Double
+//        downgradeCost = (saveFile.getString("downgrade_cost", null)?.toDouble() ?: Double) as Double
+//        upgradeCost = (saveFile.getString("upgrade_cost", null)?.toDouble() ?: Double) as Double
+    }
 }
