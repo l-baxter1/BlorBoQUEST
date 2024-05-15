@@ -58,11 +58,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/email_header_background"
+            android:clickable="true"
+            android:focusable="true"
             android:fontFamily="@font/press_start_2p"
             android:padding="3dp"
-            android:text="Received:"
-            android:clickable="true"
-            android:focusable="true" />
+            android:text="Received:" />
     </LinearLayout>
 
     <View
@@ -94,10 +94,14 @@
         android:id="@+id/timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/email_header_background"
+        android:fontFamily="@font/press_start_2p"
+        android:padding="4dp"
         android:text="Time:"
-        app:layout_constraintStart_toEndOf="@+id/bmailLogo"
-        app:layout_constraintTop_toBottomOf="@+id/nav_menu" />
+        app:layout_constraintBottom_toTopOf="@+id/email_headers"
+        app:layout_constraintStart_toEndOf="@+id/bmailLogo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
