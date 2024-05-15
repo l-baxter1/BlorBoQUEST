@@ -107,6 +107,8 @@ class Settings: AppCompatActivity() {
         MainActivity.blorboMultiplier = 1.0
         MainActivity.downgradeCost = 1.0
         MainActivity.upgradeCost = 1.0
+        MainActivity.autoclickersCount = 0
+        MainActivity.purchased = false
 
         saveDataEditor.putString("total_cash", MainActivity.totalCash.toString())
         saveDataEditor.putString("cash_per_click", MainActivity.cashPerClick.toString())
@@ -114,11 +116,14 @@ class Settings: AppCompatActivity() {
         saveDataEditor.putString("blorbo_multiplier", MainActivity.blorboMultiplier.toString())
         saveDataEditor.putString("downgrade_cost", MainActivity.downgradeCost.toString())
         saveDataEditor.putString("upgrade_cost", MainActivity.upgradeCost.toString())
+        saveDataEditor.putInt("autoclicker_count", MainActivity.autoclickersCount)
+        saveDataEditor.putBoolean("purchased", MainActivity.purchased)
 
-        saveDataEditor.commit()
+        var worked = saveDataEditor.commit()
 
-        startActivity(Intent(this, com.zybooks.blorboquest.MainActivity::class.java))
-
-        Toast.makeText(this, "Progress reset.", Toast.LENGTH_SHORT).show()
+        if(worked) {
+            startActivity(Intent(this, com.zybooks.blorboquest.MainActivity::class.java))
+            Toast.makeText(this, "Progress reset.", Toast.LENGTH_SHORT).show()
+        }
     }
 }

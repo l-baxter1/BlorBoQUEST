@@ -20,14 +20,15 @@
         android:layout_width="375dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/press_start_2p"
+        android:lineSpacingExtra="2sp"
         android:text="    You are a multimillionaire, though you don\'t flaunt it. You live modestly, making sure your wife and son are well taken care of. Much of your income goes to charity and a college fund for your son. Life is good. \n \n Until him. \n \n BlorBo. \n \n Suddenly, your dream life is turned into a nightmare. BlorBo, the quadrillionaire CEO of BlorBoCorp and, for all intents and purposes, the ruler of the universe, has decided—for no reason in particular—to screw you over. He takes everything—family, house, money, job—and there\'s nothing you can do about it. Who\'s gonna stop the king of the universe? Not you, that's for sure. You are left completely alone and hopeless, roaming the streets, trying only to find your next meal. Life sucks. \n \n Until… \n \n You see a familiar shadow walking into the alleyway you've settled in for the night. \n \n It\'s him. \n \n Time for revenge. \n \n Down with BlorBo."
         android:textColor="#000000"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nav_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

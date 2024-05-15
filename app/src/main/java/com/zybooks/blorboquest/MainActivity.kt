@@ -45,8 +45,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var stinkManDead: ImageView
     private lateinit var stinkMan: ImageView
     private lateinit var black: ImageView
-
-    private var autoclickersCount = 0
     private lateinit var autoclickerHandler: Handler
 
     var totalCash = 0.0
@@ -55,6 +53,8 @@ class MainActivity : AppCompatActivity() {
     var blorboMultiplier = 1.0
     var downgradeCost = 1.0
     var upgradeCost = 1.0
+    var autoclickersCount = 0
+    var purchased = false
 
     private lateinit var killButton: Button
     private var killUnlocked = false
@@ -144,6 +144,10 @@ class MainActivity : AppCompatActivity() {
         BlorboDeadImage.visibility = View.GONE
 
         autoclickerHandler = Handler(Looper.getMainLooper())
+
+        if(purchased) {
+            startAutoclicker()
+        }
 
         mainHandler.post(object: Runnable {
             override fun run() {
@@ -296,8 +300,10 @@ class MainActivity : AppCompatActivity() {
     private fun buyAutoclicker(option: UpgradeOption) {
         var cost = option.cost
 
+        purchased = true
+
         if (totalCash >= cost) {
-            clickMultiplier += 10.0
+            //clickMultiplier += 10.0
             // Update UI to reflect the new multiplier and total cash
             setMultBox(multiplierBox, clickMultiplier)
             setMoneyBox(cashBox, totalCash)
@@ -314,6 +320,8 @@ class MainActivity : AppCompatActivity() {
             // Handle case where player doesn't have enough cash to buy the upgrade
             // You might show a message to the player indicating insufficient funds
         }
+        saveToSaveFile()
+        setValuesFromFile()
     }
     private fun applyMoneyLaunderingUpgrade(option: UpgradeOption) {
         if (totalCash >= 100.0) {
@@ -504,6 +512,8 @@ class MainActivity : AppCompatActivity() {
         saveDataEditor.putString("blorbo_multiplier", blorboMultiplier.toString())
         saveDataEditor.putString("downgrade_cost", downgradeCost.toString())
         saveDataEditor.putString("upgrade_cost", upgradeCost.toString())
+        saveDataEditor.putInt("autoclicker_count", autoclickersCount)
+        saveDataEditor.putBoolean("purchased", purchased)
 
         saveDataEditor.apply()
     }
@@ -515,5 +525,7 @@ class MainActivity : AppCompatActivity() {
         blorboMultiplier = (saveFile.getString("blorbo_multiplier", null)?.toDouble() ?: Double) as Double
         downgradeCost = (saveFile.getString("downgrade_cost", null)?.toDouble() ?: Double) as Double
         upgradeCost = (saveFile.getString("upgrade_cost", null)?.toDouble() ?: Double) as Double
+        autoclickersCount = saveFile.getInt("autoclicker_count", 0)
+        purchased = saveFile.getBoolean("purchased", false)
     }
 }
