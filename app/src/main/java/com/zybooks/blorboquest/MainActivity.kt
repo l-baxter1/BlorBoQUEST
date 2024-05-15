@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var downgradeButton: ImageButton
     private lateinit var upgradeButton: ImageButton
     private lateinit var downgradeCostBox: TextView
-    private lateinit var upgradeCostBox: TextView
     private lateinit var mainHandler: Handler
     private lateinit var flashText: TextView
     private lateinit var BlorboDeadImage: ImageView
@@ -182,7 +181,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         // R.id.fragmentContainer = View.GONE
 
@@ -208,8 +206,6 @@ class MainActivity : AppCompatActivity() {
 
         return super.onKeyDown(keyCode, event)
     }
-
-
     override fun onBackPressed() {
         if (upgradeFragmentVisible) {
             showAllViews()
@@ -219,14 +215,13 @@ class MainActivity : AppCompatActivity() {
             showAllViews()
         }
     }
-
     private fun showAllViews() {
-                // Make the fragment container and all other views visible
-                val rootLayout = findViewById<ViewGroup>(R.id.main)
-                for (i in 0 until rootLayout.childCount) {
-                    val child = rootLayout.getChildAt(i)
-                    child.visibility = View.VISIBLE
-                }
+        // Make the fragment container and all other views visible
+        val rootLayout = findViewById<ViewGroup>(R.id.main)
+        for (i in 0 until rootLayout.childCount) {
+            val child = rootLayout.getChildAt(i)
+            child.visibility = View.VISIBLE
+        }
         if (killUnlocked == true) {
             killButton.visibility = View.VISIBLE
         } else {
@@ -237,7 +232,6 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.popBackStack()
         supportFragmentManager.isDestroyed
     }
-
     private fun showUpgradeOptions() {
         if (!upgradeFragmentVisible) {
             val fragment = UpgradeOptionsFragment()
@@ -255,7 +249,6 @@ class MainActivity : AppCompatActivity() {
            // showAllViews()
         }
     }
-
     private fun hideViewsIfUpgradeButtonClicked() {
         val rootLayout = findViewById<ViewGroup>(R.id.main)
 
@@ -267,7 +260,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
     // Call startAutoclicker() when the autoclicker is purchased
     private fun startAutoclicker() {
         autoclickerHandler.postDelayed(object : Runnable {
@@ -287,7 +279,6 @@ class MainActivity : AppCompatActivity() {
             }
         }, 1000)
     }
-
     // Call stopAutoclicker() when the autoclicker is disabled or removed
     private fun stopAutoclicker() {
         autoclickerHandler.removeCallbacksAndMessages(null)
@@ -385,8 +376,22 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.menu_button ->{
-                startActivity(Intent(this, MenuPage::class.java))
-            }
+                val saveDataFile = getSharedPreferences("saveFile", Context.MODE_PRIVATE)
+                val saveDataEditor = saveDataFile.edit()
+
+                saveDataEditor.putString("total_cash", totalCash.toString())
+                saveDataEditor.putString("cash_per_click", cashPerClick.toString())
+                saveDataEditor.putString("click_multiplier", clickMultiplier.toString())
+                saveDataEditor.putString("blorbo_multiplier", blorboMultiplier.toString())
+                saveDataEditor.putString("downgrade_cost", downgradeCost.toString())
+                saveDataEditor.putInt("autoclicker_count", autoclickersCount)
+                saveDataEditor.putBoolean("purchased", purchased)
+
+                var worked = saveDataEditor.commit()
+
+                if(worked) {
+                    startActivity(Intent(this, MenuPage::class.java))
+                }            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -457,7 +462,7 @@ class MainActivity : AppCompatActivity() {
         saveToSaveFile()
         setValuesFromFile()
     }
-//    fun onUpgradeButtonClick(view: View) {
+    fun onUpgradeButtonClick(view: View) {
 //        if (totalCash >= upgradeCost) {
 //            totalCash -= upgradeCost
 //            if (clickMultiplier <= 10) {
@@ -486,6 +491,7 @@ class MainActivity : AppCompatActivity() {
 //
 //        saveToSaveFile()
 //        setValuesFromFile()
+    }
     fun onDowngradeButtonClick(view: View) {
         if (totalCash >= downgradeCost) {
             totalCash -= downgradeCost
