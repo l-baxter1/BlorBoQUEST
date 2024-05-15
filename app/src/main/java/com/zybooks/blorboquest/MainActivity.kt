@@ -335,8 +335,6 @@ class MainActivity : AppCompatActivity() {
             // Handle case where player doesn't have enough cash to buy the upgrade
             // You might show a message to the player indicating insufficient funds
         }
-        saveToSaveFile()
-        setValuesFromFile()
     }
     fun onKillButtonClick(view: View) {
         if (totalCash > blorboMoney) {
