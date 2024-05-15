@@ -25,8 +25,7 @@ class Gallery: AppCompatActivity() {
         R.drawable.gallery8,
         R.drawable.gallery9,
         R.drawable.gallery10,
-        R.drawable.gallery11,
-        R.drawable.start_background
+        R.drawable.gallery11
     )
     override fun onCreate(savedInstanceState: Bundle?) {
 

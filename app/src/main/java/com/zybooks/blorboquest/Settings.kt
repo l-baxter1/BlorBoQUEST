@@ -106,7 +106,7 @@ class Settings: AppCompatActivity() {
         MainActivity.clickMultiplier = 1.0
         MainActivity.blorboMultiplier = 1.0
         MainActivity.downgradeCost = 1.0
-        MainActivity.upgradeCost = 1.0
+        //MainActivity.upgradeCost = 1.0
         MainActivity.autoclickersCount = 0
         MainActivity.purchased = false
 
