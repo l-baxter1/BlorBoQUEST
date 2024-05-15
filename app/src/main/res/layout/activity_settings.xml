@@ -32,7 +32,6 @@
             android:layout_height="34dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/divider"
-            android:backgroundTint="#009688"
             android:fontFamily="@font/press_start_2p" />
 
         <Spinner
@@ -41,7 +40,6 @@
             android:layout_height="34dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/divider"
-            android:backgroundTint="#009688"
             android:fontFamily="@font/press_start_2p" />
 
         <androidx.appcompat.widget.SwitchCompat
@@ -49,28 +47,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/press_start_2p"
-            android:text="Switch" />
+            android:text="This switch doesn't do anything" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/press_start_2p"
-            android:text="Switch" />
+            android:text="Give yourself cancer" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/press_start_2p"
-            android:text="Switch" />
+            android:text=".01% chance to become a rock" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/press_start_2p"
-            android:text="Switch" />
+            android:text="This is a switch" />
 
         <Button
             android:id="@+id/quitButton"
