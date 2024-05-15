@@ -71,6 +71,14 @@
             android:fontFamily="@font/press_start_2p"
             android:text="Switch" />
 
+        <Button
+            android:id="@+id/quitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/quit_icon"
+            android:text="Quit"
+            android:onClick="onQuitButtonClicked"/>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

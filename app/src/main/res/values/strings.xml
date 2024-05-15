@@ -15,7 +15,7 @@
     <string name="background_color_settings">Background color:</string>
     <string name="sfx_toggle_label">Sfx</string>
 <string-array name="emailTextArray">
-    <item id="0">Email 1 :3</item>
+    <item id="0">h</item>
     <item id="1">Email 2 ;3</item>
     <item id="2">Email 3 :o</item>
     <item id="3">Email 4 :]</item>
@@ -27,16 +27,16 @@
     <item id="9">Email 10 :O</item>
 </string-array>
     <string-array name="emailLabelArray">
-        <item id="0">Email 1</item>
-        <item id="1">Email 2</item>
-        <item id="2">Email 3</item>
-        <item id="3">Email 4</item>
-        <item id="4">Email 5</item>
-        <item id="5">Email 6</item>
-        <item id="6">Email 7</item>
-        <item id="7">Email 8</item>
-        <item id="8">Email 9</item>
-        <item id="9">Email 10</item>
+        <item id="0">BlorBo-----Teehee-----------------today</item>
+        <item id="1">BlorBo-----haiii------------------today</item>
+        <item id="2">Wife------->:(--------------------today</item>
+        <item id="3">Son--------I\'m scared-------------today</item>
+        <item id="4">Mom--------I don\'t miss you-------today</item>
+        <item id="5">Irs--------Urgent---------------today</item>
+        <item id="6">Blorb…-----Urgent---------------today</item>
+        <item id="7">BlorBo-----:3---------------------today</item>
+        <item id="8">BlorBo-----Hows it goin?----------today</item>
+        <item id="9">BlorBo-----Your wife\'s…--------today</item>
     </string-array>
 
 

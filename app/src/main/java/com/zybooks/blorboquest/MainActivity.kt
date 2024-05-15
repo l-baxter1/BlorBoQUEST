@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity() {
 
         //initialize save data file
         val saveDataFile = getSharedPreferences("saveFile", Context.MODE_PRIVATE)
-        var saveDataEditor = saveDataFile.edit()
 
         setValuesFromFile()
 
