@@ -14,6 +14,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginTop
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import kotlin.concurrent.timer
@@ -89,6 +90,7 @@ class Mail: AppCompatActivity() {
             textViewsArray[ID]?.typeface=customFont
             textViewsArray[ID]?.maxLines=1
             textViewsArray[ID]?.textSize= 10F
+
             // You can customize other properties of the TextView here
 
             parentLayout.addView(textViewsArray[ID])

@@ -58,7 +58,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/email_header_background"
-            android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/press_start_2p"
             android:padding="3dp"
