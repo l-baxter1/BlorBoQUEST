@@ -31,9 +31,9 @@ class UpgradeOptionsFragment : Fragment() {
         val listView = view.findViewById<ListView>(R.id.listView)
 
         val upgradeOptions = listOf(
-            UpgradeOption("Disclaimer", 0, "Cost multiplies by itself each time a multiplier is bought!!"),
+            UpgradeOption("Disclaimer", 0, "Cost adds by itself each time a multiplier is bought!!"),
             UpgradeOption("Money Laundering Upgrade", 600, "Upgrades money multiplier by x10"),
-            UpgradeOption("Weapon Upgrade", 5000, "Unlocks an ending but that's coded later"),
+            UpgradeOption("Weapon Upgrade", 5000, "Unlocks kill button"),
             UpgradeOption("Autoclicker Upgrade", 5, "Adds 1 automatic cps per upgrade")
         )
 
