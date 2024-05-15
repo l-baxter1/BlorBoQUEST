@@ -26,10 +26,10 @@ goal: get to $1,000,000 without blorbo stealing all of your money
 
 Mark off when completed with an 'X' in the square brackets
 [X] ToDo: switch money stealage to percentage instead of a flat amount
-[] ToDo: make upgrades and downgrades their own xml pages
+[X] ToDo: make upgrades and downgrades their own xml pages
 [X] ToDo: make sure game state is preserved when switching pages
-[] ToDo: do email page
-[] ToDo: upgrades should be based on percentage not flat amounts as well
+[X] ToDo: do email page
+[X] ToDo: upgrades should be based on percentage not flat amounts as well
 [X] ToDo: add start menu
 [X] ToDo: add info to background info page
 [] ToDo: add credits

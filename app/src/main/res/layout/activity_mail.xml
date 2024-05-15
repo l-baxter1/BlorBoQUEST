@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/divider"
+            android:background="@drawable/email_header_background"
             android:fontFamily="@font/press_start_2p"
             android:padding="3dp"
             android:text="From:" />
@@ -47,24 +47,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/divider"
+            android:background="@drawable/email_header_background"
             android:fontFamily="@font/press_start_2p"
             android:padding="3dp"
-            android:text="Subject:"
-            android:onClick="openFragment"/>
+            android:text="Subject:" />
 
         <TextView
             android:id="@+id/Received"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/divider"
+            android:background="@drawable/email_header_background"
             android:fontFamily="@font/press_start_2p"
             android:padding="3dp"
             android:text="Received:"
             android:clickable="true"
-            android:focusable="true"
-            android:onClick="addEmail"/>
+            android:focusable="true" />
     </LinearLayout>
 
     <View
@@ -82,12 +80,14 @@
 
     <LinearLayout
         android:id="@+id/email_layout"
-        android:layout_width="409dp"
-        android:layout_height="592dp"
+        android:layout_width="402dp"
+        android:layout_height="706dp"
         android:layout_marginTop="3dp"
+        android:background="@color/pink_back_color"
         android:orientation="vertical"
         android:translationZ="-200dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_headers" />
 
     <TextView
