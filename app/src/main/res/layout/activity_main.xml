@@ -20,10 +20,10 @@
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
-        android:layout_width="450dp"
-        android:layout_height="1352dp"
+        android:layout_width="426dp"
+        android:layout_height="727dp"
         app:layout_constraintBottom_toTopOf="@id/bottomStatusBar"
-        app:layout_constraintTop_toBottomOf="@id/nav_menu"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="8dp">
 
