@@ -20,9 +20,13 @@
 
         <TextView
             android:id="@+id/emailText"
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="268dp"
+            android:fontFamily="@font/press_start_2p"
+            android:paddingTop="5dp"
+            android:paddingLeft="10dp"
             android:text="TextView"
-            android:gravity="center"/>
+            android:textColor="@color/white"
+            android:lineSpacingExtra="10sp"/>
     </LinearLayout>
 </FrameLayout>
