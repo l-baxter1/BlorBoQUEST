@@ -92,7 +92,7 @@ class Settings: AppCompatActivity() {
         return super.onOptionsItemSelected(item)
 
     }
-    fun onQuitButtonClicked() {
+    fun onQuitButtonClicked(view:View) {
         finishAffinity()
     }
     fun onResetButtonClicked(view: View) {

@@ -414,12 +414,12 @@ class MainActivity : AppCompatActivity() {
         saveDataEditor.apply()
     }
     fun setValuesFromFile() {
-        var saveFile = getSharedPreferences("saveFile", MODE_PRIVATE)
-        totalCash = (saveFile.getString("total_cash", null)?.toDouble() ?: Double) as Double
-        cashPerClick = (saveFile.getString("cash_per_click", null)?.toDouble() ?: Double) as Double
-        clickMultiplier = (saveFile.getString("click_multiplier", null)?.toDouble() ?: Double) as Double
-        blorboMultiplier = (saveFile.getString("blorbo_multiplier", null)?.toDouble() ?: Double) as Double
-        downgradeCost = (saveFile.getString("downgrade_cost", null)?.toDouble() ?: Double) as Double
-        upgradeCost = (saveFile.getString("upgrade_cost", null)?.toDouble() ?: Double) as Double
+//        var saveFile = getSharedPreferences("saveFile", MODE_PRIVATE)
+//        totalCash = (saveFile.getString("total_cash", null)?.toDouble() ?: Double) as Double
+//        cashPerClick = (saveFile.getString("cash_per_click", null)?.toDouble() ?: Double) as Double
+//        clickMultiplier = (saveFile.getString("click_multiplier", null)?.toDouble() ?: Double) as Double
+//        blorboMultiplier = (saveFile.getString("blorbo_multiplier", null)?.toDouble() ?: Double) as Double
+//        downgradeCost = (saveFile.getString("downgrade_cost", null)?.toDouble() ?: Double) as Double
+//        upgradeCost = (saveFile.getString("upgrade_cost", null)?.toDouble() ?: Double) as Double
     }
 }
