@@ -22,8 +22,8 @@ import kotlinx.coroutines.delay
 import com.zybooks.blorboquest.UpgradeOptionsFragment
 import androidx.fragment.app.Fragment
 import android.view.KeyEvent
+import android.widget.Toast
 import java.util.Locale
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,18 +37,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var upgradeCostBox: TextView
     private lateinit var mainHandler: Handler
     private lateinit var flashText: TextView
-    private lateinit var resetButton: Button
 
     private var autoclickersCount = 0
     private lateinit var autoclickerHandler: Handler
 
-
-    private var totalCash = 0.0
-    private var cashPerClick = 1.0
-    private var clickMultiplier = 1.0
-    private var blorboMultiplier = 1.0
-    private var downgradeCost = 1.0
-    private var upgradeCost = 1.0
+    var totalCash = 0.0
+    var cashPerClick = 1.0
+    var clickMultiplier = 1.0
+    var blorboMultiplier = 1.0
+    var downgradeCost = 1.0
+    var upgradeCost = 1.0
 
     private var upgradeFragmentVisible = false
 
@@ -61,10 +59,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        //initialize save data file
-        val saveDataFile = getSharedPreferences("saveFile", Context.MODE_PRIVATE)
-        var saveDataEditor = saveDataFile.edit()
 
         setValuesFromFile()
 
@@ -81,7 +75,6 @@ class MainActivity : AppCompatActivity() {
         multiplierBox = findViewById(R.id.multiplierBox)
         mainHandler = Handler(Looper.getMainLooper())
         flashText = findViewById(R.id.moneyStolenText)
-        //resetButton = findViewById(R.id.reset_button)
 
         background.background = getDrawable(R.drawable.placeholder_bg)
         flashText.visibility = View.GONE
@@ -109,10 +102,10 @@ class MainActivity : AppCompatActivity() {
                     blorboStealsYourMoneyLoser()
                     makeTextFlash("MONEY STOLEN!")
                 }
-                //saves data to file
-                saveToSaveFile()
-                //sets values from save file
-                setValuesFromFile()
+//                //saves data to file
+//                saveToSaveFile()
+//                //sets values from save file
+//                setValuesFromFile()
                 //checks for money every 5s
                 mainHandler.postDelayed(this, 5000) //5 sec
             }
@@ -147,14 +140,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showAllViews() {
-                // Make the fragment container and all other views visible
-                val rootLayout = findViewById<ViewGroup>(R.id.main)
-                for (i in 0 until rootLayout.childCount) {
-                    val child = rootLayout.getChildAt(i)
-                    child.visibility = View.VISIBLE
-                }
-               supportFragmentManager.popBackStack()
-               supportFragmentManager.isDestroyed
+        // Make the fragment container and all other views visible
+        val rootLayout = findViewById<ViewGroup>(R.id.main)
+        for (i in 0 until rootLayout.childCount) {
+            val child = rootLayout.getChildAt(i)
+            child.visibility = View.VISIBLE
+        }
+       supportFragmentManager.popBackStack()
+       supportFragmentManager.isDestroyed
     }
     private fun showUpgradeOptions() {
         if (!upgradeFragmentVisible) {
@@ -418,7 +411,7 @@ class MainActivity : AppCompatActivity() {
         saveDataEditor.putString("downgrade_cost", downgradeCost.toString())
         saveDataEditor.putString("upgrade_cost", upgradeCost.toString())
 
-        saveDataEditor.commit()
+        saveDataEditor.apply()
     }
     fun setValuesFromFile() {
         var saveFile = getSharedPreferences("saveFile", MODE_PRIVATE)
@@ -428,16 +421,5 @@ class MainActivity : AppCompatActivity() {
         blorboMultiplier = (saveFile.getString("blorbo_multiplier", null)?.toDouble() ?: Double) as Double
         downgradeCost = (saveFile.getString("downgrade_cost", null)?.toDouble() ?: Double) as Double
         upgradeCost = (saveFile.getString("upgrade_cost", null)?.toDouble() ?: Double) as Double
-    }
-    fun onResetButtonClick(view: View) {
-        totalCash = 0.0
-        cashPerClick = 1.0
-        clickMultiplier = 1.0
-        blorboMultiplier = 1.0
-        downgradeCost = 1.0
-        upgradeCost = 1.0
-
-        saveToSaveFile()
-        setValuesFromFile()
     }
 }
