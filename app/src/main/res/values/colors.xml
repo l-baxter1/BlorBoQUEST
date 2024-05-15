@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="email_background">#484a48</color>
+    <color name="email_background">#530141</color>
     <color name="default_back_color">#EB9705</color>
     <color name="yellow_back_color">#FDFD6F</color>
     <color name="brown_back_color">#663106</color>
