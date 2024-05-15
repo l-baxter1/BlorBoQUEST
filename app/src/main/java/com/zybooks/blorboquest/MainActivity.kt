@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
 
         killButton.setOnClickListener {
             // Check if the player has over 30000 dollars
-            if (totalCash >= 30000) {
+            if (totalCash >= 20) {
                 // Player wins
                 findViewById<TextView>(R.id.resultsText).apply {
                     visibility = View.VISIBLE
@@ -297,6 +297,10 @@ class MainActivity : AppCompatActivity() {
         var cost = option.cost
 
         if (totalCash >= cost) {
+            clickMultiplier += 10.0
+            // Update UI to reflect the new multiplier and total cash
+            setMultBox(multiplierBox, clickMultiplier)
+            setMoneyBox(cashBox, totalCash)
             totalCash -= cost
             cost += cost
             startAutoclicker()
@@ -312,11 +316,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun applyMoneyLaunderingUpgrade(option: UpgradeOption) {
-        if (totalCash >= 5.0) {
+        if (totalCash >= 100.0) {
             // Deduct $600 from the total cash
-            totalCash -= 5.0
+            totalCash -= 100.0
             // Apply the money laundering multiplier
-            clickMultiplier *= 10.0
+            clickMultiplier *= 5.0
             // Update UI to reflect the new multiplier and total cash
             setMultBox(multiplierBox, clickMultiplier)
             setMoneyBox(cashBox, totalCash)
