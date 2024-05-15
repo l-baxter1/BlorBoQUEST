@@ -2,12 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/purple_light_back_color"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/nav_menu"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/pink_back_color"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,6 +29,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="◄"
+            android:background="@drawable/btn_background"
             android:onClick="onLeftClicked"
             android:textSize="40dp" />
 
@@ -38,6 +40,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="►"
+            android:background="@drawable/btn_background"
             android:onClick="onRightClicked"
             android:textSize="40sp" />
     </LinearLayout>

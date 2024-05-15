@@ -49,7 +49,7 @@ class Settings: AppCompatActivity() {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (parent.getItemAtPosition(position) == "Select Background Color") {
-                    settings_layout.setBackgroundResource(R.color.default_back_color)
+                    settings_layout.setBackgroundResource(R.color.purple_light_back_color)
                 }
                 if(parent.getItemAtPosition(position)== "Yellow"){
                    settings_layout.setBackgroundResource(R.color.yellow_back_color)
