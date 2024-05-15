@@ -85,7 +85,6 @@ class MainActivity : AppCompatActivity() {
         moneyButton = findViewById(R.id.moneyButton)
         cashBox = findViewById(R.id.cashBox)
         background = findViewById(R.id.main)
-        upgradeCostBox = findViewById(R.id.upgradeCostBox)
         downgradeCostBox = findViewById(R.id.downgradeCostBox)
         upgradeButton = findViewById(R.id.upgradeButton)
         downgradeButton = findViewById(R.id.downgradeButton)
@@ -101,11 +100,16 @@ class MainActivity : AppCompatActivity() {
         stinkMan = findViewById(R.id.emotionImage)
         black = findViewById(R.id.deadImage)
 
+        setValuesFromFile()
+
+        supportActionBar?.setIcon(R.drawable.menu_icon)
+        setSupportActionBar(findViewById(R.id.nav_menu))
+
         background.background = getDrawable(R.drawable.placeholder_bg)
         flashText.visibility = View.GONE
 
         setMoneyBox(cashBox, totalCash)
-        setMoneyBox(upgradeCostBox, upgradeCost)
+        //setMoneyBox(upgradeCostBox, upgradeCost)
         setMoneyBox(downgradeCostBox, downgradeCost)
         setMultBox(multiplierBox, clickMultiplier)
 
@@ -269,8 +273,14 @@ class MainActivity : AppCompatActivity() {
         autoclickerHandler.postDelayed(object : Runnable {
             override fun run() {
                 // Increment total cash by 1 and update the UI
-                totalCash += 1
+                totalCash += autoclickersCount * clickMultiplier
                 setMoneyBox(cashBox, totalCash)
+
+                if (totalCash < downgradeCost) {
+                    downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
+                } else {
+                    downgradeCostBox.setTextColor(Color.parseColor("#FFFFFF"))
+                }
 
                 // Repeat the autoclicker every second
                 autoclickerHandler.postDelayed(this, 1000)
@@ -282,7 +292,6 @@ class MainActivity : AppCompatActivity() {
     private fun stopAutoclicker() {
         autoclickerHandler.removeCallbacksAndMessages(null)
     }
-
     fun handleUpgradeOption(option: UpgradeOption) {
         applyUpgradeEffect(option)
     }
@@ -308,7 +317,6 @@ class MainActivity : AppCompatActivity() {
             killUnlocked == true
         }
     }
-
     private fun buyAutoclicker(option: UpgradeOption) {
         var cost = option.cost
 
@@ -317,15 +325,15 @@ class MainActivity : AppCompatActivity() {
         if (totalCash >= cost) {
             //clickMultiplier += 2.0
             // Update UI to reflect the new multiplier and total cash
-            setMultBox(multiplierBox, clickMultiplier)
-            setMoneyBox(cashBox, totalCash)
+            //setMultBox(multiplierBox, clickMultiplier)
             totalCash -= cost
+            setMoneyBox(cashBox, totalCash)
             cost *= cost
             startAutoclicker()
             autoclickersCount++
             // Increment the total cash by 1 for each autoclicker
             mainHandler.postDelayed({
-                totalCash += autoclickersCount
+                totalCash += (autoclickersCount * clickMultiplier)
                 setMoneyBox(cashBox, totalCash)
             }, 1000) // Adjust the delay (in milliseconds) as needed
         } else {
@@ -336,20 +344,20 @@ class MainActivity : AppCompatActivity() {
         setValuesFromFile()
     }
     private fun applyMoneyLaunderingUpgrade(option: UpgradeOption) {
-        if (totalCash >= 100.0) {
+        if (totalCash >= 10.0) {
             // Deduct $600 from the total cash
-            totalCash -= 100.0
+            totalCash -= 10.0
             // Apply the money laundering multiplier
             clickMultiplier *= 5.0
             // Update UI to reflect the new multiplier and total cash
             setMultBox(multiplierBox, clickMultiplier)
             setMoneyBox(cashBox, totalCash)
             // Update text colors
-            if (totalCash >= upgradeCost) {
-                upgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
-            } else {
-                upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
-            }
+//            if (totalCash >= upgradeCost) {
+//                upgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
+//            } else {
+//                upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
+//            }
             if (totalCash >= downgradeCost) {
                 downgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
             } else {
@@ -390,11 +398,11 @@ class MainActivity : AppCompatActivity() {
         setMoneyBox(cashBox, totalCash)
 
         //update text colors
-        if (totalCash >= upgradeCost) {
-            upgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
-        } else {
-            upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
-        }
+//        if (totalCash >= upgradeCost) {
+//            upgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
+//        } else {
+//            upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
+//        }
         if (totalCash >= downgradeCost) {
             downgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
         } else {
@@ -435,11 +443,11 @@ class MainActivity : AppCompatActivity() {
         setMoneyBox(cashBox, totalCash)
 
         //update text colors
-        if (totalCash >= upgradeCost) {
-            upgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
-        } else {
-            upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
-        }
+//        if (totalCash >= upgradeCost) {
+//            upgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
+//        } else {
+//            upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
+//        }
         if (totalCash >= downgradeCost) {
             downgradeCostBox.setTextColor(Color.parseColor("#ffffff"))
         } else {
@@ -449,36 +457,35 @@ class MainActivity : AppCompatActivity() {
         saveToSaveFile()
         setValuesFromFile()
     }
-    fun onUpgradeButtonClick(view: View) {
-        if (totalCash >= upgradeCost) {
-            totalCash -= upgradeCost
-            if (clickMultiplier <= 10) {
-                clickMultiplier *= 2
-            } else {
-                clickMultiplier += upgradeCost / 25
-            }
-            upgradeCost *= 1.5
-
-            //truncates numbers to two decimal points
-            clickMultiplier = Math.round(clickMultiplier * 10.0) / 10.0
-            totalCash = Math.round(totalCash * 10.0) / 10.0
-
-            setMultBox(multiplierBox, clickMultiplier)
-            setMoneyBox(upgradeCostBox, upgradeCost)
-            setMoneyBox(cashBox, totalCash)
-
-            //update text colors
-            if (totalCash < upgradeCost) {
-                upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
-            }
-            if (totalCash < downgradeCost) {
-                downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
-            }
-        }
-
-        saveToSaveFile()
-        setValuesFromFile()
-    }
+//    fun onUpgradeButtonClick(view: View) {
+//        if (totalCash >= upgradeCost) {
+//            totalCash -= upgradeCost
+//            if (clickMultiplier <= 10) {
+//                clickMultiplier *= 2
+//            } else {
+//                clickMultiplier += upgradeCost / 25
+//            }
+//            upgradeCost *= 1.5
+//
+//            //truncates numbers to two decimal points
+//            clickMultiplier = Math.round(clickMultiplier * 10.0) / 10.0
+//            totalCash = Math.round(totalCash * 10.0) / 10.0
+//
+//            setMultBox(multiplierBox, clickMultiplier)
+//            setMoneyBox(upgradeCostBox, upgradeCost)
+//            setMoneyBox(cashBox, totalCash)
+//
+//            //update text colors
+//            if (totalCash < upgradeCost) {
+//                upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
+//            }
+//            if (totalCash < downgradeCost) {
+//                downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
+//            }
+//        }
+//
+//        saveToSaveFile()
+//        setValuesFromFile()
     fun onDowngradeButtonClick(view: View) {
         if (totalCash >= downgradeCost) {
             totalCash -= downgradeCost
@@ -493,9 +500,9 @@ class MainActivity : AppCompatActivity() {
             setMoneyBox(cashBox, totalCash)
 
             //update text colors
-            if (totalCash < upgradeCost) {
-                upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
-            }
+//            if (totalCash < upgradeCost) {
+//                upgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
+//            }
             if (totalCash < downgradeCost) {
                 downgradeCostBox.setTextColor(Color.parseColor("#ff0000"))
             }
@@ -523,7 +530,7 @@ class MainActivity : AppCompatActivity() {
         saveDataEditor.putString("click_multiplier", clickMultiplier.toString())
         saveDataEditor.putString("blorbo_multiplier", blorboMultiplier.toString())
         saveDataEditor.putString("downgrade_cost", downgradeCost.toString())
-        saveDataEditor.putString("upgrade_cost", upgradeCost.toString())
+        //saveDataEditor.putString("upgrade_cost", upgradeCost.toString())
         saveDataEditor.putInt("autoclicker_count", autoclickersCount)
         saveDataEditor.putBoolean("purchased", purchased)
 
@@ -536,7 +543,7 @@ class MainActivity : AppCompatActivity() {
         clickMultiplier = (saveFile.getString("click_multiplier", null)?.toDouble() ?: Double) as Double
         blorboMultiplier = (saveFile.getString("blorbo_multiplier", null)?.toDouble() ?: Double) as Double
         downgradeCost = (saveFile.getString("downgrade_cost", null)?.toDouble() ?: Double) as Double
-        upgradeCost = (saveFile.getString("upgrade_cost", null)?.toDouble() ?: Double) as Double
+        //upgradeCost = (saveFile.getString("upgrade_cost", null)?.toDouble() ?: Double) as Double
         autoclickersCount = saveFile.getInt("autoclicker_count", 0)
         purchased = saveFile.getBoolean("purchased", false)
     }

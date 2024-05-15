@@ -87,7 +87,22 @@ class Settings: AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.menu_button ->{
-                startActivity(Intent(this, MenuPage::class.java))
+                val saveDataFile = getSharedPreferences("saveFile", Context.MODE_PRIVATE)
+                val saveDataEditor = saveDataFile.edit()
+
+                saveDataEditor.putString("total_cash", MainActivity.totalCash.toString())
+                saveDataEditor.putString("cash_per_click", MainActivity.cashPerClick.toString())
+                saveDataEditor.putString("click_multiplier", MainActivity.clickMultiplier.toString())
+                saveDataEditor.putString("blorbo_multiplier", MainActivity.blorboMultiplier.toString())
+                saveDataEditor.putString("downgrade_cost", MainActivity.downgradeCost.toString())
+                saveDataEditor.putInt("autoclicker_count", MainActivity.autoclickersCount)
+                saveDataEditor.putBoolean("purchased", MainActivity.purchased)
+
+                var worked = saveDataEditor.commit()
+
+                if(worked) {
+                    startActivity(Intent(this, MenuPage::class.java))
+                }
             }
         }
 
@@ -115,7 +130,6 @@ class Settings: AppCompatActivity() {
         saveDataEditor.putString("click_multiplier", MainActivity.clickMultiplier.toString())
         saveDataEditor.putString("blorbo_multiplier", MainActivity.blorboMultiplier.toString())
         saveDataEditor.putString("downgrade_cost", MainActivity.downgradeCost.toString())
-        saveDataEditor.putString("upgrade_cost", MainActivity.upgradeCost.toString())
         saveDataEditor.putInt("autoclicker_count", MainActivity.autoclickersCount)
         saveDataEditor.putBoolean("purchased", MainActivity.purchased)
 

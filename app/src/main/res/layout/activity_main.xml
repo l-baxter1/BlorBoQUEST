@@ -147,11 +147,11 @@
             android:id="@+id/upgradeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="8dp"
-            android:layout_toStartOf="@+id/upgradeCostBox"
             android:background="@null"
             android:onClick="onUpgradeButtonClick"
             android:src="@drawable/button_upgrade" />
@@ -182,19 +182,6 @@
             android:text="$--"
             android:textAlignment="textStart"
             android:textColor="#ff0000"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/upgradeCostBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="5dp"
-            android:fontFamily="@font/press_start_2p"
-            android:text="$--"
-            android:textColor="#FF0000"
             android:textSize="16sp" />
 
     </RelativeLayout>
