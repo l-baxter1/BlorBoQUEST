@@ -10,5 +10,6 @@
     <color name="green_back_color">#779108</color>
     <color name="pink_back_color">#FF98FF</color>
     <color name="purple_back_color">#530141</color>
+    <color name="purple_light_back_color">#980A79</color>
 
 </resources>
