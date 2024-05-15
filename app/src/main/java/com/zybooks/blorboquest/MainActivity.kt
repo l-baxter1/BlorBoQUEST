@@ -174,6 +174,9 @@ class MainActivity : AppCompatActivity() {
                 showAllViews()
             }
             BlorboDeadImage.visibility = View.GONE
+            blorboLaugh.visibility = View.GONE
+            stinkManDead.visibility = View.GONE
+            black.visibility = View.GONE
             return true // Indicate that the event has been handled
         }
         killButton.visibility = View.VISIBLE
@@ -309,9 +312,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun applyMoneyLaunderingUpgrade(option: UpgradeOption) {
-        if (totalCash >= 20.0) {
+        if (totalCash >= 5.0) {
             // Deduct $600 from the total cash
-            totalCash -= 20.0
+            totalCash -= 5.0
             // Apply the money laundering multiplier
             clickMultiplier *= 10.0
             // Update UI to reflect the new multiplier and total cash
