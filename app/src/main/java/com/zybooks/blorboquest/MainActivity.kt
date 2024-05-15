@@ -157,10 +157,6 @@ class MainActivity : AppCompatActivity() {
                     blorboStealsYourMoneyLoser()
                     makeTextFlash("MONEY STOLEN!")
                 }
-//                //saves data to file
-//                saveToSaveFile()
-//                //sets values from save file
-//                setValuesFromFile()
                 //checks for money every 5s
                 mainHandler.postDelayed(this, 5000) //5 sec
             }
@@ -336,6 +332,8 @@ class MainActivity : AppCompatActivity() {
             // Handle case where player doesn't have enough cash to buy the upgrade
             // You might show a message to the player indicating insufficient funds
         }
+        saveToSaveFile()
+        setValuesFromFile()
     }
     fun onKillButtonClick(view: View) {
         if (totalCash > blorboMoney) {
