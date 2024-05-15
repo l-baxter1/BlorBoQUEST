@@ -26,6 +26,8 @@ import android.view.KeyEvent
 import android.widget.Toast
 import java.util.Locale
 import android.widget.ImageView
+import android.media.MediaPlayer
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,6 +64,8 @@ class MainActivity : AppCompatActivity() {
     private var blorboMoney = 30000.0
 
     private var upgradeFragmentVisible = false
+
+    private lateinit var mediaPlayer: MediaPlayer
 
     private val upgradeOptions = listOf(
         UpgradeOption("Money Laundering Upgrade", 400, "Upgrades money multiplier by x30"),
@@ -109,9 +113,17 @@ class MainActivity : AppCompatActivity() {
             showUpgradeOptions()
         }
 
+        mediaPlayer = MediaPlayer.create(this, R.raw.backgroundmusiclong)
+
+        // Set looping to true for continuous playback
+        mediaPlayer.isLooping = true
+
+        // Start playing the audio
+        mediaPlayer.start()
+
         killButton.setOnClickListener {
             // Check if the player has over 30000 dollars
-            if (totalCash >= 20) {
+            if (totalCash >= 3000) {
                 // Player wins
                 findViewById<TextView>(R.id.resultsText).apply {
                     visibility = View.VISIBLE
@@ -303,12 +315,12 @@ class MainActivity : AppCompatActivity() {
         purchased = true
 
         if (totalCash >= cost) {
-            //clickMultiplier += 10.0
+            //clickMultiplier += 2.0
             // Update UI to reflect the new multiplier and total cash
             setMultBox(multiplierBox, clickMultiplier)
             setMoneyBox(cashBox, totalCash)
             totalCash -= cost
-            cost += cost
+            cost *= cost
             startAutoclicker()
             autoclickersCount++
             // Increment the total cash by 1 for each autoclicker
