@@ -6,15 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:translationZ="-10dp"
+    android:translationZ="400dp"
     tools:context=".MainActivity">
-
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/nav_menu"
-        app:layout_constraintBottom_toTopOf="@id/bottomStatusBar"/>
 
 
     <!-- Top status bar -->
@@ -25,18 +18,30 @@
 
     <!-- Bottom status bar -->
 
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="450dp"
+        android:layout_height="1352dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomStatusBar"
+        app:layout_constraintTop_toBottomOf="@id/nav_menu"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="8dp">
+
+    </FrameLayout>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/nav_menu"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
+        android:fontFamily="@font/press_start_2p"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:fontFamily="@font/press_start_2p"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <RelativeLayout
+
 
         android:id="@+id/statusBar"
         android:layout_width="411dp"
@@ -48,7 +53,6 @@
         app:layout_constraintTop_toBottomOf="@+id/nav_menu">
 
         <!-- Cash status -->
-
 
         <TextView
             android:id="@+id/cashBox"
@@ -93,6 +97,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.322"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/blorboEvilLaughImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/blorbo_evillaugh"
+        android:translationZ="400dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/statusBar" />
+
+    <ImageView
+        android:id="@+id/deadImage"
+        android:layout_width="1415dp"
+        android:layout_height="1793dp"
+        android:alpha=".75"
+        android:src="@drawable/blackbox"
+        android:translationZ="300dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_menu"
+        tools:layout_editor_absoluteX="-362dp" />
+
+    <ImageView
+        android:id="@+id/stinkDeadImage"
+        android:layout_width="405dp"
+        android:layout_height="227dp"
+        android:layout_gravity="bottom"
+        android:scaleType="fitXY"
+        android:src="@drawable/stinkdead"
+        android:translationZ="400dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <RelativeLayout
         android:id="@+id/bottomStatusBar"
@@ -175,18 +213,59 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/resultsText"
+        android:layout_width="419dp"
+        android:layout_height="212dp"
+        android:fontFamily="@font/press_start_2p"
+        android:text="Results Text"
+        android:textAlignment="center"
+        android:textColor="#FF0000"
+        android:textSize="48sp"
+        android:translationZ="400dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <Button
+        android:id="@+id/killButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kill BlorBo"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/bottomStatusBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/blorboDeadImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/blorbodeadstyle"
+        android:translationZ="400dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/fragmentContainer" />
+
     <ImageButton
         android:id="@+id/moneyButton"
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:layout_marginBottom="24dp"
+        android:background="@null"
         android:onClick="onMoneyButtonClick"
         android:src="@drawable/money_button_selector"
         app:layout_constraintBottom_toTopOf="@+id/bottomStatusBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.123"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@null"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/moneyStolenText"

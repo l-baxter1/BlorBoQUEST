@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.icu.text.CompactDecimalFormat
+import android.media.Image
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -24,6 +25,7 @@ import androidx.fragment.app.Fragment
 import android.view.KeyEvent
 import android.widget.Toast
 import java.util.Locale
+import android.widget.ImageView
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,6 +39,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var upgradeCostBox: TextView
     private lateinit var mainHandler: Handler
     private lateinit var flashText: TextView
+    private lateinit var BlorboDeadImage: ImageView
+    private lateinit var blorboMove:ImageView
+    private lateinit var blorboLaugh: ImageView
+    private lateinit var stinkManDead: ImageView
+    private lateinit var stinkMan: ImageView
+    private lateinit var black: ImageView
 
     private var autoclickersCount = 0
     private lateinit var autoclickerHandler: Handler
@@ -47,6 +55,11 @@ class MainActivity : AppCompatActivity() {
     var blorboMultiplier = 1.0
     var downgradeCost = 1.0
     var upgradeCost = 1.0
+
+    private lateinit var killButton: Button
+    private var killUnlocked = false
+    private lateinit var resultsText: TextView
+    private var blorboMoney = 30000.0
 
     private var upgradeFragmentVisible = false
 
@@ -75,6 +88,14 @@ class MainActivity : AppCompatActivity() {
         multiplierBox = findViewById(R.id.multiplierBox)
         mainHandler = Handler(Looper.getMainLooper())
         flashText = findViewById(R.id.moneyStolenText)
+        killButton = findViewById(R.id.killButton)
+        resultsText = findViewById(R.id.resultsText)
+        BlorboDeadImage = findViewById(R.id.blorboDeadImage)
+        blorboMove = findViewById(R.id.blorboMove)
+        blorboLaugh = findViewById(R.id.blorboEvilLaughImage)
+        stinkManDead = findViewById(R.id.stinkDeadImage)
+        stinkMan = findViewById(R.id.emotionImage)
+        black = findViewById(R.id.deadImage)
 
         background.background = getDrawable(R.drawable.placeholder_bg)
         flashText.visibility = View.GONE
@@ -87,6 +108,40 @@ class MainActivity : AppCompatActivity() {
         upgradeButton.setOnClickListener {
             showUpgradeOptions()
         }
+
+        killButton.setOnClickListener {
+            // Check if the player has over 30000 dollars
+            if (totalCash >= 30000) {
+                // Player wins
+                findViewById<TextView>(R.id.resultsText).apply {
+                    visibility = View.VISIBLE
+                    text = "YOU WIN"
+                    BlorboDeadImage.visibility = View.VISIBLE
+                    blorboMove.visibility = View.GONE
+                    stinkMan.visibility = View.GONE
+                    moneyButton.visibility = View.GONE
+                    killButton.visibility = View.GONE
+                    black.visibility = View.VISIBLE
+                }
+            } else {
+                // Player loses
+                findViewById<TextView>(R.id.resultsText).apply {
+                    visibility = View.VISIBLE
+                    text = "WOMP WOMP,YOU DIED "
+                    killButton.visibility = View.GONE
+                    blorboMove.visibility = View.GONE
+                    stinkMan.visibility = View.GONE
+                    moneyButton.visibility = View.GONE
+                    stinkManDead.visibility = View.VISIBLE
+                    blorboLaugh.visibility = View.VISIBLE
+                    black.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        killButton.visibility = View.GONE
+        resultsText.visibility = View.GONE
+        BlorboDeadImage.visibility = View.GONE
 
         autoclickerHandler = Handler(Looper.getMainLooper())
 
@@ -122,9 +177,16 @@ class MainActivity : AppCompatActivity() {
             } else {
                 showAllViews()
             }
-
+            BlorboDeadImage.visibility = View.GONE
             return true // Indicate that the event has been handled
         }
+        killButton.visibility = View.VISIBLE
+        if (killUnlocked == false) {
+            R.id.killButton = View.VISIBLE
+        } else {
+            R.id.killButton = View.GONE
+        }
+
         return super.onKeyDown(keyCode, event)
     }
 
@@ -140,15 +202,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showAllViews() {
-        // Make the fragment container and all other views visible
-        val rootLayout = findViewById<ViewGroup>(R.id.main)
-        for (i in 0 until rootLayout.childCount) {
-            val child = rootLayout.getChildAt(i)
-            child.visibility = View.VISIBLE
+                // Make the fragment container and all other views visible
+                val rootLayout = findViewById<ViewGroup>(R.id.main)
+                for (i in 0 until rootLayout.childCount) {
+                    val child = rootLayout.getChildAt(i)
+                    child.visibility = View.VISIBLE
+                }
+        if (killUnlocked == true) {
+            killButton.visibility = View.VISIBLE
+        } else {
+            killButton.visibility = View.GONE
         }
-       supportFragmentManager.popBackStack()
-       supportFragmentManager.isDestroyed
+        resultsText.visibility = View.GONE
+        R.id.blorboDeadImage = View.GONE
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.isDestroyed
     }
+
     private fun showUpgradeOptions() {
         if (!upgradeFragmentVisible) {
             val fragment = UpgradeOptionsFragment()
@@ -207,17 +277,29 @@ class MainActivity : AppCompatActivity() {
             //"Weapon Upgrade" -> unlockWeaponUpgrade(option)
             "Autoclicker Upgrade" -> buyAutoclicker(option)
             // Add more cases for other upgrade options if needed
+            "Weapon Upgrade" -> unlockWeaponUpgrade(option)
             else -> {
                 // Handle unrecognized upgrade options
             }
         }
     }
+    fun unlockWeaponUpgrade(option: UpgradeOption) {
+        // Show the kill button when the weapon upgrade is bought
+        var cost = option.cost
+
+        if (totalCash >= cost) {
+            totalCash -= cost
+            killButton.visibility = View.VISIBLE
+            killUnlocked == true
+        }
+    }
+
     private fun buyAutoclicker(option: UpgradeOption) {
         var cost = option.cost
 
         if (totalCash >= cost) {
             totalCash -= cost
-            cost *= cost
+            cost += cost
             startAutoclicker()
             autoclickersCount++
             // Increment the total cash by 1 for each autoclicker
@@ -231,9 +313,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun applyMoneyLaunderingUpgrade(option: UpgradeOption) {
-        if (totalCash >= 600.0) {
+        if (totalCash >= 20.0) {
             // Deduct $600 from the total cash
-            totalCash -= 600.0
+            totalCash -= 20.0
             // Apply the money laundering multiplier
             clickMultiplier *= 10.0
             // Update UI to reflect the new multiplier and total cash
@@ -255,7 +337,16 @@ class MainActivity : AppCompatActivity() {
             // You might show a message to the player indicating insufficient funds
         }
     }
-
+    fun onKillButtonClick(view: View) {
+        if (totalCash > blorboMoney) {
+            // Player wins if their money is above BlorBo's money
+            resultsText.text = "YOU WON"
+        } else {
+            // Player loses if their money is not above BlorBo's money
+            resultsText.text = "WOMP WOMP. :( YOU DIED"
+        }
+        resultsText.visibility = View.VISIBLE
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
         return super.onCreateOptionsMenu(menu)
